@@ -1,0 +1,192 @@
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+.grid-container {
+    height: 100vh;
+    /*padding: 0 10% 0 10%;*/
+    display: grid;
+    grid-template-columns: 15% 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar main-content";
+    font-family: 'Roboto-Bold', sans-serif;
+}
+
+@font-face {
+    font-family: Roboto-Bold;
+    src: url(./Assets/Roboto/Roboto-Bold.ttf);
+}
+
+.sidebar {
+    grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    background-color: #1992D4;
+    color: white;
+    padding-left: 30px;
+    padding-top: 20px;
+}
+
+.header {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+        "search-bar profile-area"
+        "greeting-area action-area";
+    background-color: #FFFFFF;
+    padding: 30px 40px 20px 40px;
+}
+
+.main-content-container {
+    grid-area: main-content;
+    background-color: #E2E8F0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto 1fr;
+    padding: 1.6rem 1.6rem 1.6rem 1.6rem;
+    gap: 1.6rem;
+}
+
+.sidebar-list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+li.sidebar-list-item {
+    display: flex;
+    align-items: center;
+    font-size: 1.1vw;
+}
+
+.icon {
+    margin-right: 10px;
+    width: 1.1vw;
+    height: 1.1vw;
+}
+
+.dashboard-icon {
+    margin-right: 10px;
+    width: 2vw;
+    height: 2vw;
+}
+
+.sidebar-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.6vw;
+    padding-bottom: 40px;
+}
+
+.sidebar-list-item.communities {
+    padding-bottom: 40px;
+}
+
+.profile-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.username {
+    color: black;
+    font-size: 25px;
+}
+
+.greeting-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+.specific-greeting {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.specific-greeting p:nth-of-type(1) {
+    color: black;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.specific-greeting p:nth-of-type(2) {
+    color: black;
+    font-size: 25px;
+    margin: 0;
+}
+
+.action-area {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+button {
+    font-family: 'Roboto-Bold', sans-serif;
+    font-size: 14px;
+    background-color: #1992D4;
+    color: white;
+    border-radius: 30px;
+    border-color: #1992D4;
+    width: 120px;
+    height: 50px;
+    box-shadow: none;
+}
+
+.card {
+    background-color: #FFFFFF;
+    border-radius: 1rem;
+    padding: 2.4rem;
+    position: relative;
+    border-left: 0.8rem solid orange;
+}
+
+.card p{
+    font-family: "Roboto", sans-serif;
+    position: relative;
+    font-size: 16px;
+}
+
+h2 {
+    margin:20px 0 10px 0;
+}
+
+.action-container {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.action-container img {
+    width: 24px;
+    height: 24px;
+}
+
+.projects-cards-container {
+    display: grid;
+    grid-template: repeat(1, 1fr) / repeat(3, 1fr);
+    gap: 1.6rem;
+    flex: 1;
+}
+
+h4 {
+    margin: 20px 0 10px 0;
+}
+
