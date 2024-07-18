@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ModuleService from '../services/module.service';
+import ModuleService from '../../services/module.service';
 
 export default class AddModule extends Component {
 	constructor(props) {

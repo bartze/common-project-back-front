@@ -26,11 +26,13 @@ db.sequelize
 
 // PORT FOR API REST - Check the use with 8081
 const PORT = 8082;
+
 const httpServer = app.listen(PORT, () => {
 	console.log(`API Services Server is running on port ${PORT}.`);
 });
 
-module.exports = {
+/* module.exports = {
 	httpServer,
 	app,
 };
+ */

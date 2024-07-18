@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import AddModule from './components/add-module.component';
-import Module from './components/module.component';
+import AddModule from './components/modules/add-module.component';
+import Module from './components/modules/module.component';
+import ModulesList from './components/modules/modules-list.component';
 import Dashboard from './components/dashboard/dashboard.component';
-import ModulesList from './components/modules-list.component';
 import Chat from './components/chat/chat.component';
 
 class App extends Component {
