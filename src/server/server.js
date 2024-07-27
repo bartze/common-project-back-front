@@ -1,5 +1,8 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const sqlite = require('sqlite3');
+const { Server } = require('socket.io');
 const setRoutesConfig = require('./express-api-psql-db/routes/modules.routes');
 const corsOptions = {
 	origin: 'http://localhost:8081',
@@ -13,8 +16,8 @@ app.use(express.urlencoded({ extended: true }));
 
 setRoutesConfig(app);
 
+// PGSQL DB Section
 const db = require('./express-api-psql-db/models');
-
 db.sequelize
 	.sync()
 	.then((e) => {
@@ -31,8 +34,56 @@ const httpServer = app.listen(PORT, () => {
 	console.log(`API Services Server is running on port ${PORT}.`);
 });
 
-/* module.exports = {
-	httpServer,
-	app,
-};
- */
+httpServer.on('error', (err) => {
+	console.error('Error starting the server:', err);
+});
+
+/* CHAT WEB SOCKET SQLITE */
+sqlite.verbose();
+
+const dblite = new sqlite.Database(
+	path.resolve(__dirname, 'websocket-chat-server/db/data.db'),
+	sqlite.OPEN_READWRITE,
+	(err) => {
+		if (err) return console.error(err);
+	},
+);
+
+dblite.on('open', () => {
+	console.log('Connected to the SQLite database.');
+});
+
+dblite.on('error', (err) => {
+	console.error('Error connecting to the SQLite database:', err);
+});
+
+// Websocket server
+
+const io = new Server(httpServer, {
+	cors: {
+		origin: 'http://localhost:8081',
+	},
+});
+
+io.on('connection', (socket) => {
+	console.log('A user connected:', socket.id);
+
+	socket.on('disconnect', () => {
+		console.log('A user disconnected:', socket.id);
+	});
+
+	socket.on('chat message', (msg) => {
+		console.log(
+			'User with socket id:',
+			socket.id,
+			' emits message: ' + msg,
+		);
+		io.emit('chat message', msg);
+	});
+});
+
+io.on('error', (err) => {
+	console.error('Error with the websocket server:', err);
+});
+
+io.listen(8083);
