@@ -51,11 +51,11 @@ class Chat extends Component {
 					<input id="input" />
 					<button>Send</button>
 				</form>
-				<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+				<script src="/socket.io/socket.io.js"></script>
 			</div>
 		);
 	}
 }
-//<script src="/socket.io/socket.io.js"></script>
+//<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 
 export default withRouter(Chat);
