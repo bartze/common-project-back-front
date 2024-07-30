@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple App</title>
+<style>
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.sidebar {
+  width: 200px;
+  background-color: #f1f1f1;
+  padding: 20px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+}
+
+.sidebar a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.sidebar a:hover {
+  background-color: #eee;
+}
+
+.content {
+  margin-left: 25%;
+  padding: 20px;
+  height: 100vh;
+}
+
+.home-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.module {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.popup {
+  display: none;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.popup-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.task-form input, .task-form select {
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-list li {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar">
+  <a href="#" onclick="showContent('home')">Home</a>
+  <a href="#" onclick="showContent('tasks')">Tasks</a>
+  <a href="#" onclick="showContent('profile')">Profile</a>
+  <a href="#" onclick="showContent('messages')">Messages</a>
+  <a href="#" onclick="showContent('games')">Games</a>
+</div>
+
+<div class="content">
+  <div class="home-content" id="home">
+    <h1>Welcome, User!</h1>
+    <div class="module">
+      <h2>Module 1</h2>
+      <ul>
+        <li>Task 1</li>
+        <li>Task 2</li>
+      </ul>
+    </div>
+    <div class="module">
+      <h2>Module 2</h2>
+      <ul>
+        <li>Task 3</li>
+        <li>Task 4</li>
+      </ul>
+    </div>
+    <button onclick="showPopup('add-module')">Add Module</button>
+  </div>
+
+  <div id="tasks" style="display: none;">
+    <h2>Tasks</h2>
+    <form class="task-form" onsubmit="addTask(event)">
+      <input type="text" placeholder="Task Name" id="task-name">
+      <textarea placeholder="Description" id="task-description"></textarea>
+      <button type="submit">Add Task</button>
+    </form>
+    <ul class="task-list" id="task-list"></ul>
+  </div>
+
+  <div id="profile" style="display: none;">
+    <h2>Profile</h2>
+    <p>User Information</p>
+  </div>
+
+  <div id="messages" style="display: none;">
+    <h2>Messages</h2>
+    <p>Chat Area</p>
+  </div>
+
+  <div id="games" style="display: none;">
+    <h2>Games</h2>
+    <p>Game Area</p>
+  </div>
+
+  <div class="popup" id="add-module">
+    <span class="popup-close" onclick="hidePopup('add-module')">×</span>
+    <h3>Add Module</h3>
+    <input type="text" placeholder="Module Name" id="module-name">
+    <button onclick="addModule()">Add Module</button>
+  </div>
+</div>
+
+<script>
+  let modules = [
+    { name: "Module 1", tasks: ["Task 1", "Task 2"] },
+    { name: "Module 2", tasks: ["Task 3", "Task 4"] }
+  ];
+
+  let tasks = [];
+
+  function showContent(id) {
+    const contentElements = document.querySelectorAll('.content > div');
+    contentElements.forEach(element => element.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+  }
+
+  function showPopup(id) {
+    document.getElementById(id).style.display = 'block';
+  }
+
+  function hidePopup(id) {
+    document.getElementById(id).style.display = 'none';
+  }
+
+  function addModule() {
+    const moduleName = document.getElementById('module-name').value;
+    modules.push({ name: moduleName, tasks: [] });
+    updateModules();
+    hidePopup('add-module');
+  }
+
+  function updateModules() {
+    const homeContent = document.querySelector('.home-content');
+    homeContent.innerHTML = `
+      <h1>Welcome, User!</h1>
+      ${modules.map(module => `
+        <div class="module">
+          <h2>${module.name}</h2>
+          <ul>
+            ${module.tasks.map(task => `<li>${task}</li>`).join('')}
+          </ul>
+        </div>
+      `).join('')}
+      <button onclick="showPopup('add-module')">Add Module</button>
+    `;
+  }
+
+  function addTask(event) {
+    event.preventDefault();
+    const taskName = document.getElementById('task-name').value;
+    const taskDescription = document.getElementById('task-description').value;
+    tasks.push({ name: taskName, description: taskDescription });
+    updateTasks();
+    document.getElementById('task-name').value = '';
+    document.getElementById('task-description').value = '';
+  }
+
+  function updateTasks() {
+    const taskList = document.getElementById('task-list');
+    taskList.innerHTML = '';
+    tasks.forEach(task => {
+      const listItem = document.createElement('li');
+      listItem.textContent = `${task.name} - ${task.description}`;
+      taskList.appendChild(listItem);
+    });
+  }
+</script>
+
+</body>
+</html>
