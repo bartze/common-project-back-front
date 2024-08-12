@@ -6,7 +6,7 @@ import AddModule from './components/modules/add-module.component';
 import Module from './components/modules/module.component';
 import ModulesList from './components/modules/modules-list.component';
 import Dashboard from './components/dashboard/dashboard.component';
-import Chat from './components/chat/chat.component';
+import Chat from './components/chat-react/chat.component';
 
 class App extends Component {
 	render() {
