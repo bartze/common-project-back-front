@@ -30,7 +30,7 @@ class App extends Component {
 
 						<li className="nav-item">
 							<Link to={'/chat'} className="nav-link">
-								Chat
+								ChatAI
 							</Link>
 						</li>
 					</div>

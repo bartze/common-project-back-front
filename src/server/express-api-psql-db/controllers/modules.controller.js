@@ -155,7 +155,8 @@ exports.findAllPublished = (req, res) => {
 		});
 };
 
-exports.chat = (req, res) => {
+/* exports.chat = (req, res) => {
+	console.log('chat', process.cwd());
 	console.log(process.cwd() + '/public/chat.html');
-	res.sendFile(process.cwd() + '/public/chat.html');
-};
+	res.sendFile(process.cwd() + '/public/chat.html'); 
+}; */

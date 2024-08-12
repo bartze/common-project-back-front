@@ -1,60 +1,108 @@
-import React, { Component } from 'react';
+import React, { /* useState, */ useEffect } from 'react';
 import { withRouter } from '../../common/with-router';
-//import { Socket } from 'socket.io';
+import { checkGPUandInitialize, submitRequest } from './chat.ai';
+import * as socketIO from './socket.js';
+import './chat.component.css';
 
-class Chat extends Component {
-	socketIOClientHandler() {
-		const socket = window.io('localhost:8083');
+let chatHistory = '';
+let socket = undefined;
+let input;
+let chatInitialized = false;
 
+function Chat() {
+	/* 	const [inputMessageValue, setInputMessageValue] = useState('');
+	const [chatHistoryValue, setChatHistoryValue] = useState(''); */
+
+	const socketIOClientHandler = () => {
+		if (socket !== undefined) return; // avoid initializing socket multiple times, use hooks
+
+		socket = socketIO('localhost:8083');
 		socket.on('connect', () =>
-			console.log('Connected to socket', socket.id),
+			console.log('Initialized connection to socket', socket.id),
 		);
-		// usar referencias de react
-		const messages = document.getElementById('messages');
-		const form = document.getElementById('form');
-		const input = document.getElementById('input');
 
-		form.addEventListener('submit', function (e) {
-			e.preventDefault();
-			if (input.value) {
-				console.log('input', input.value);
-				socket.emit('chat message', input.value);
-				console.log('socket', socket);
-				input.value = '';
-			}
-		});
+		// mover a state con hooks
+		chatHistory = document.getElementById('messages');
+		input = document.getElementById('user-input');
 
 		socket.on('chat message', function (msg) {
-			// usar referencias de react
 			const item = document.createElement('li');
+			console.log('msg');
 			item.textContent = msg;
-			messages.appendChild(item);
-			// check scrolling in react
-			// window.scrollTo(0, document.body.scrollHeight);
+			chatHistory.appendChild(item);
+			input.value = '';
+			input.focus();
 		});
-	}
+	};
 
-	componentDidMount() {
-		this.socketIOClientHandler();
-	}
+	const initialiazeIA = async () => {
+		try {
+			await checkGPUandInitialize();
+			chatInitialized = true;
+		} catch (error) {
+			chatInitialized = false;
+			console.error('Error initializing chat AI', error);
+		}
+	};
 
-	render() {
-		return (
-			<div>
-				<h2>Chat</h2>
-				<p>Welcome to the Chat</p>
+	useEffect(() => {
+		console.log('useEffect once, []');
+		socketIOClientHandler();
+	});
 
-				<ul id="messages"></ul>
+	const socketMessage = async () => {
+		//setChatHistoryValue(input);
+		if (input.value.includes('dasGPT')) {
+			const response = await submitRequest(input.value, '');
+			socket.emit('chat message', response);
+		} else {
+			socket.emit('chat message', input.value);
+		}
+	};
 
-				<form id="form" action="">
-					<input id="input" />
-					<button>Send</button>
-				</form>
-				<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+	return (
+		<div>
+			<div className="container">
+				<div className="row pt-3">
+					<div className="col-md-8 col-12">
+						<h2>Welcome to the Chat</h2>
+						{chatInitialized && <span>Chat ready</span>}
+						<button
+							id="send-button-ia"
+							className="btn btn-primary send-button"
+							onClick={() => initialiazeIA()}
+						>
+							Load AI ALBAGPT
+						</button>
+					</div>
+				</div>
+				<div id="messages"></div>
 			</div>
-		);
-	}
+			<div className="input-container">
+				<div className="container p-0 card-chat">
+					<div className="input-group">
+						<textarea
+							className="form-control"
+							id="user-input"
+							placeholder="Type your message here ..."
+						></textarea>
+					</div>
+				</div>
+
+				<button
+					id="send-button-chat"
+					className="btn btn-primary send-button"
+					onClick={() => socketMessage()}
+				>
+					Send Message
+				</button>
+			</div>
+			<div id="status"></div>
+			<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+		</div>
+	);
 }
+
 //<script src="/socket.io/socket.io.js"></script>
 
 export default withRouter(Chat);
