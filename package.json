@@ -4,7 +4,7 @@
 	"description": "Welcome to the course project repository.",
 	"main": "index.js",
 	"scripts": {
-		"start": "concurrently \"node scripts/serve-all.js\" \"npm run start:client\"  \"npm run start:server\"",
+		"start": "concurrently \"node scripts/serve-all.js\" \"npm run start:client\"  \"npm run start:server\" \"npm run start:chat\"",
 		"start:server": "node src/server/server.js",
 		"prestart:server": "npm run docker-postgresql-start",
 		"build:server": "echo wip..",
@@ -20,7 +20,10 @@
 		"test:client": "node scripts/test.js",
 		"eject:client": "node scripts/eject.js",
 		"lint": "eslint .",
-		"check:docker": "docker ps -q > /dev/null 2>&1 && echo 'Docker is running' || echo 'Docker is not running' && exit 1"
+		"check:docker": "docker ps -q > /dev/null 2>&1 && echo 'Docker is running' || echo 'Docker is not running' && exit 1",
+		"start:chat": "cd src/client/chat-app &&  serve . & cd -",
+		"build:chat": "webpack",
+		"lint:chat": "eslint . --ext js  --report-unused-disable-directives"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
@@ -46,9 +49,12 @@
 		"eslint-config-airbnb-base": "^15.0.0",
 		"eslint-plugin-import": "^2.29.1",
 		"jest": "^29.7.0",
-		"prettier": "^2.6.2"
+		"prettier": "^2.6.2",
+		"webpack-cli": "^5.1.4",
+		"webpack-dev-server": "^5.0.4"
 	},
 	"dependencies": {
+		"copy-webpack-plugin": "^12.0.2",
 		"@babel/core": "^7.16.0",
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
 		"@svgr/webpack": "^5.5.0",
