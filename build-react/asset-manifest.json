@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.js": "build-react/main.5a2453fd.js",
+    "socket.js": "build-react/f1640ed8ef8d0ddcdb74.js",
+    "index.html": "build-react/index.html",
+    "manifest.json": "build-react/6cba51a855ac42711282.json"
+  },
+  "entrypoints": [
+    "main.5a2453fd.js"
+  ]
+}
