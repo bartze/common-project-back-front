@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { withRouter } from '../../common/with-router';
-//import { Socket } from 'socket.io';
 
 class Chat extends Component {
 	socketIOClientHandler() {
@@ -17,9 +16,7 @@ class Chat extends Component {
 		form.addEventListener('submit', function (e) {
 			e.preventDefault();
 			if (input.value) {
-				console.log('input', input.value);
 				socket.emit('chat message', input.value);
-				console.log('socket', socket);
 				input.value = '';
 			}
 		});

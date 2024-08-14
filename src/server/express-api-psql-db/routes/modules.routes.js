@@ -26,5 +26,8 @@ module.exports = (app) => {
 	// Delete all modules
 	router.delete('/', modules.deleteAll);
 
+	// Router go to chat front end endpoint
+	//router.get('/chat', modules.chat);
+
 	app.use('/api/modules', router);
 };
