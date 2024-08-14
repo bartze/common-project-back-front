@@ -24,7 +24,7 @@
 		"start:client2": "node scripts/start.js",
 		"start:client": "webpack --config webpack.dev.js && webpack serve --config webpack.dev.js",
 		"start:server": "node src/server/server.js",
-		"start2": "concurrently \"node scripts/serve-all.js\" \"npm run start:client\"  \"npm run start:server\" \"npm run start:chat\"",
+		"start2": "concurrently \"node scripts/serve-all.js\" \"npm run start:client2\"  \"npm run start:server\" \"npm run start:chat\"",
 		"start": "concurrently \"node scripts/serve-all.js\" \"npm run start:client\"  \"npm run start:server\" \"npm run start:chat\"",
 		"test:client": "node scripts/test.js",
 		"test:server": "echo wip.."

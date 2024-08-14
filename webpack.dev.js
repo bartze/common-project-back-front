@@ -9,13 +9,13 @@ process.env.BABEL_ENV = 'development';
 process.env.NODE_ENV = 'development';
 
 module.exports = merge(common, {
-	mode: 'development',
+	mode: 'production',
 	devtool: 'inline-source-map',
 	target: 'web',
 	devServer: {
 		port: 8081,
 		compress: true,
-		https: true,
+		https: false,
 		static: {
 			directory: path.join(__dirname, 'build-react'),
 		},
