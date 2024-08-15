@@ -4,8 +4,10 @@
 	"description": "Welcome to the course project repository.",
 	"main": "index.js",
 	"scripts": {
-		"build:chat": "npm run clean:chat && cd src/client/chat-app-ia && npm i && webpack && cd -",
-		"build:client": "node scripts/build.js",
+		"build": "npm run build:client && npm run build:server && npm run build:chat",
+		"build:chat": "npm run clean:chat && cd src/client/chat-app-ia && npm i && webpack",
+		"build:client": "node webpack.build.j",
+		"build:client:dev": "node webpack.build.js",
 		"build:server": "echo wip..",
 		"check:docker": "docker ps -q > /dev/null 2>&1 && echo 'Docker is running' || echo 'Docker is not running' && exit 1",
 		"clean:deep": "rm -rf node_modules && rm -rf src/client/chat-app-ia/node_modules && rm -rf src/client/chat-app-ia/dist",
@@ -20,12 +22,10 @@
 		"lint:chat": "eslint . --ext js  --report-unused-disable-directives",
 		"lint": "eslint .",
 		"prestart:server": "npm run docker-postgresql-start",
-		"start:chat": "npm run build:chat && cd src/client/chat-app-ia && webpack serve --no-client-overlay --server-type https && cd -",
-		"start:client2": "node scripts/start.js",
-		"start:client": "webpack --config webpack.dev.js && webpack serve --config webpack.dev.js",
+		"start:chat": "npm run build:chat && webpack serve --no-client-overlay --server-type https && cd -",
+		"start:client": "node webpack.serve.js",
 		"start:server": "node src/server/server.js",
-		"start2": "concurrently \"node scripts/serve-all.js\" \"npm run start:client2\"  \"npm run start:server\" \"npm run start:chat\"",
-		"start": "concurrently \"node scripts/serve-all.js\" \"npm run start:client\"  \"npm run start:server\" \"npm run start:chat\"",
+		"start": "concurrently \"node scripts/docker-service-controller.js\" \"npm run start:client\"  \"npm run start:server\" \"npm run start:chat\"",
 		"test:client": "node scripts/test.js",
 		"test:server": "echo wip.."
 	},
@@ -56,11 +56,20 @@
 		"eslint-plugin-import": "^2.29.1",
 		"html-loader": "^5.1.0",
 		"jest": "^29.7.0",
+		"jest-environment-jsdom": "^29.7.0",
 		"prettier": "^2.6.2",
+		"source-map-loader": "^3.0.0",
+		"sqlite3": "^5.1.5",
 		"style-loader": "^4.0.0",
+		"tailwindcss": "^3.0.2",
+		"terser-webpack-plugin": "^5.2.5",
 		"ts-loader": "^9.5.1",
+		"vite": "^4.5.2",
+		"webpack": "^5.64.4",
 		"webpack-cli": "^5.1.4",
-		"webpack-dev-server": "^4.6.0"
+		"webpack-dev-server": "^4.6.0",
+		"webpack-manifest-plugin": "^4.0.2",
+		"workbox-webpack-plugin": "^6.4.1"
 	},
 	"dependencies": {
 		"@babel/core": "^7.16.0",
@@ -123,16 +132,7 @@
 		"semver": "^7.3.5",
 		"sequelize": "^6.32.0",
 		"socket.io": "^4.6.1",
-		"socket.io-client": "^4.5.4",
-		"source-map-loader": "^3.0.0",
-		"sqlite3": "^5.1.5",
-		"tailwindcss": "^3.0.2",
-		"terser-webpack-plugin": "^5.2.5",
-		"vite": "^4.5.2",
-		"webpack": "^5.64.4",
-		"webpack-dev-server": "^4.6.0",
-		"webpack-manifest-plugin": "^4.0.2",
-		"workbox-webpack-plugin": "^6.4.1"
+		"socket.io-client": "^4.5.4"
 	},
 	"browserslist": {
 		"production": [
@@ -144,60 +144,6 @@
 			"last 1 chrome version",
 			"last 1 firefox version",
 			"last 1 safari version"
-		]
-	},
-	"jest": {
-		"roots": [
-			"<rootDir>/src"
-		],
-		"collectCoverageFrom": [
-			"src/**/*.{js,jsx,ts,tsx}",
-			"!src/**/*.d.ts"
-		],
-		"setupFiles": [
-			"react-app-polyfill/jsdom"
-		],
-		"setupFilesAfterEnv": [],
-		"testMatch": [
-			"<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-			"<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
-		],
-		"testEnvironment": "jsdom",
-		"transform": {
-			"^.+\\.(js|jsx|mjs|cjs|ts|tsx)$": "<rootDir>/config/jest/babelTransform.js",
-			"^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
-			"^(?!.*\\.(js|jsx|mjs|cjs|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
-		},
-		"transformIgnorePatterns": [
-			"[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|cjs|ts|tsx)$",
-			"^.+\\.module\\.(css|sass|scss)$"
-		],
-		"modulePaths": [],
-		"moduleNameMapper": {
-			"^react-native$": "react-native-web",
-			"^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy"
-		},
-		"moduleFileExtensions": [
-			"web.js",
-			"js",
-			"web.ts",
-			"ts",
-			"web.tsx",
-			"tsx",
-			"json",
-			"web.jsx",
-			"jsx",
-			"node"
-		],
-		"watchPlugins": [
-			"jest-watch-typeahead/filename",
-			"jest-watch-typeahead/testname"
-		],
-		"resetMocks": true
-	},
-	"babel": {
-		"presets": [
-			"react-app"
 		]
 	}
 }

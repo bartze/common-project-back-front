@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { withRouter } from '../../common/with-router';
-
 class Chat extends Component {
 	socketIOClientHandler() {
 		const socket = window.io('localhost:8083');
@@ -47,11 +46,11 @@ class Chat extends Component {
 					<input id="input" />
 					<button>Send</button>
 				</form>
-				<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+				<script src="https://https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 			</div>
 		);
 	}
 }
-//<script src="/socket.io/socket.io.js"></script>
 
 export default withRouter(Chat);
+// <script src="./socket.js"></script>

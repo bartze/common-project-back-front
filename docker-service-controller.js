@@ -1,5 +1,7 @@
 const { exec } = require('child_process');
 
+// todo add a check method to only execute docker if the service is not active
+// todo try to move all this code to the webpack serve js file as a docker section to serve the project
 class OpenDockerCommand {
 	constructor(platform) {
 		this.platform = platform;
@@ -12,8 +14,8 @@ class OpenDockerCommand {
 		);
 
 		switch (this.platform) {
-			case 'darwin': // macOS
-				exec('open -a Docker', (error, stdout, stderr) => {
+			case 'darwin': // macOS ()=> From man open 0 => -g Do not bring the application to the foreground.
+				exec('open -a -g Docker', (error, stdout, stderr) => {
 					if (error) {
 						console.error('Error opening Docker on macOS:', error);
 					}
