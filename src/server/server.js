@@ -18,13 +18,14 @@ setRoutesConfig(app);
 
 // PGSQL DB Section
 const db = require('./express-api-psql-db/models');
+
 db.sequelize
 	.sync()
 	.then((e) => {
 		console.log('Synced db.');
 	})
 	.catch((err) => {
-		console.log('Failed to sync db: ' + err.message);
+		console.log('Failed to sync SEQUELIZE DB: ' + err.message);
 	});
 
 // PORT FOR API REST - Check the use with 8081

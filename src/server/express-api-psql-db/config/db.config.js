@@ -2,11 +2,11 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 module.exports = {
-	HOST: process.env.HOST || 'localhost',
-	USER: process.env.USER_POSTGRES || 'postgres',
-	PASSWORD: process.env.PASSWORD || 'localpassword',
-	DB: process.env.DB || 'postgres',
-	dialect: process.env.DIALECT || 'postgres',
+	HOST: '0.0.0.0' || process.env.HOST,
+	USER: 'postgres' || process.env.USER_POSTGRES,
+	PASSWORD: 'localpassword' || process.env.PASSWORD,
+	DB: 'postgres' || process.env.DB,
+	dialect: 'postgres',
 	pool: {
 		max: 5,
 		min: 0,
