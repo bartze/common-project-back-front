@@ -52,8 +52,6 @@ const writeStatsJson = argv.indexOf('--stats') !== -1;
 
 const config = configFactory(process.env.NODE_ENV);
 
-
-
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
@@ -139,7 +137,7 @@ checkBrowsers(paths.appPath, isInteractive)
 
 // Create the production build and print the deployment instructions.
 function build(previousFileSizes) {
-	console.log('Creating an optimized production build...');
+	console.log(`Creating an optimized ${process.env.NODE_ENV} build...`);
 
 	const compiler = webpack(config);
 	return new Promise((resolve, reject) => {

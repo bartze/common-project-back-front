@@ -11,7 +11,6 @@ process.on('unhandledRejection', (err) => {
 require('./config/env');
 
 require('dotenv').config();
-console.log('SERVE ENV', process.env.NODE_ENV);
 
 // Do this as the first thing so that any code reading it knows the right env.
 // process.env.BABEL_ENV = 'development';

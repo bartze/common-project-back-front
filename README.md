@@ -115,15 +115,11 @@ There are the following folders and files in the client folder:
 
 ## Roadmap
 
-1. Create the project structure
-1. Create the server side code
-1. Create the client side code
-1. Migrate the tmp folder to the project - WIP + iperez review
-1. Add extra tooling for the project maintining the clarriu libraries and news - WIP
-1. Create the docker-compose file - WIP
-1. Create the dockerfile for the server - WIP
-1. Create the dockerfile for the client - WIP
-1. Create the dockerfile for the database - WIP
+-   [ ] 1. Create the project structure client and server side code
+-   [ ] 1. Review build serve format lint and test tools:
+    -   [ ] webpack env should be reviewed in order to maintain a correct control of the development and production builds for the different client and server apps
+    -   [ ] the chats projects for core node should be defined in order to choose the best method to integrate both apps in the project, now the socket is a basic poc on the react app and the chat with ia is an embedded project deployed in parallel. The core node project pretends to integrate the parallel project in html inside the react project as a separate route/link(if this is possible all the documentation would be done with reveal.js as project solution).
+-   [ ] 1. Migrate the tmp folder to the project - WIP + iperez review
 
 ## Contributing
 
