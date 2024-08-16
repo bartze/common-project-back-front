@@ -15,6 +15,7 @@
 		"clean:chat": "rm -rf src/client/chat-app-ia/dist",
 		"cy:open": "cypress open",
 		"cy:run": "cypress run",
+		"cy:run:coverage": "npx nyc report --reporter=html && open http://localhost:8085 && serve -s coverage -p 8085",
 		"docker-postgresql-logs": "docker logs postgres",
 		"docker-postgresql-remove": "docker rmi $(docker images -q)",
 		"docker-postgresql-rm": "docker rm $(docker ps -a -q)",
@@ -29,7 +30,8 @@
 		"start:server": "node src/server/server.js",
 		"start": "concurrently \"node docker-service-controller.js\" \"npm run start:client\"  \"npm run start:server\" \"npm run start:chat\"",
 		"test:client:wip": "node webpack.test.js",
-		"test": "jest",
+		"test:unit": "jest",
+		"test:e2e": "npm run cy:run && npm run cy:run:coverage",
 		"test:server": "echo wip.."
 	},
 	"eslintConfig": {
