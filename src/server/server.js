@@ -5,7 +5,7 @@ const sqlite = require('sqlite3');
 const { Server } = require('socket.io');
 const setRoutesConfig = require('./express-api-psql-db/routes/modules.routes');
 const corsOptions = {
-	origin: 'http://localhost:8081',
+	origin: '*', //'http://localhost:8081',
 };
 
 const app = express();
