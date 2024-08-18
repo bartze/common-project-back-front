@@ -3,6 +3,7 @@ html, body {
     height: 100%;
 }
 
+
 .grid-container {
     height: 100vh;
     /*padding: 0 10% 0 10%;*/
@@ -24,8 +25,8 @@ html, body {
     grid-area: sidebar;
     display: flex;
     flex-direction: column;
-    background-color: #1992D4;
-    color: white;
+    background-color: grey;
+    color: black;
     padding-left: 30px;
     padding-top: 20px;
 }
@@ -38,13 +39,13 @@ html, body {
     grid-template-areas:
         "search-bar profile-area"
         "greeting-area action-area";
-    background-color: #FFFFFF;
+    background-color: grey;
     padding: 30px 40px 20px 40px;
 }
 
 .main-content-container {
     grid-area: main-content;
-    background-color: #E2E8F0;
+    background-color: grey;
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto 1fr;
@@ -139,17 +140,17 @@ li.sidebar-list-item {
 button {
     font-family: 'Roboto-Bold', sans-serif;
     font-size: 14px;
-    background-color: #1992D4;
-    color: white;
+    background-color: darkgray;
+    color: black;
     border-radius: 30px;
-    border-color: #1992D4;
+    border-color: grey;
     width: 120px;
     height: 50px;
     box-shadow: none;
 }
 
 .card {
-    background-color: #FFFFFF;
+    background-color: grey;
     border-radius: 1rem;
     padding: 2.4rem;
     position: relative;
