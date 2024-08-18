@@ -502,6 +502,7 @@ function addModule(element) {
 function editModule() {
 	const moduleTitle = document.getElementById('edit-module-title').value;
 
+	document.getElementById(selectedModule.innerText).id = moduleTitle;
 	selectedModule.innerText = moduleTitle;
 
 	updateModule({
@@ -599,7 +600,7 @@ function editProject() {
 		'edit-project-description',
 	).value;
 
-	const projectCard = document.getElementById(selectedProject.id);
+	const projectCard = document.getElementById(selectedProject.parentNode.id);
 
 	if (!projectCard) alert('Error - The project name is incorrect');
 
@@ -609,12 +610,12 @@ function editProject() {
 		description: projectDescription,
 		published: true,
 		status: 'doing',
-		module: selectedProject.id,
+		module: selectedProject.parentNode.id,
 		tasks: 'none',
 	});
 
 	projectCard.innerHTML = `
-    <div class="card">
+    <div id=${projectTitle} class="card" onclick="selectProject(this)">
 									<h3>${projectTitle}</h3>
 									<p>
 										${projectDescription}
