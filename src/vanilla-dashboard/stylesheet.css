@@ -155,6 +155,7 @@ button {
     padding: 2.4rem;
     position: relative;
     border-left: 0.8rem solid orange;
+    cursor: pointer;
 }
 
 .card p{
@@ -191,3 +192,26 @@ h4 {
     margin: 20px 0 10px 0;
 }
 
+h2 {
+    cursor: pointer;
+}
+
+h2:hover {
+    color: orange;
+}
+
+.edit-module-button {
+    display: none;
+}
+
+.remove-module-button {
+    display: none;
+}
+
+.edit-project-button {
+    display: none;
+}
+
+.remove-project-button {
+    display: none;
+}

@@ -87,84 +87,166 @@
 								<p>Shrek Example (@shrexample)</p>
 							</div>
 						</div>
+						<!--action buttons-->
 						<div class="action-area">
 							<button
 								onclick="showPopup('add-module')"
 								type="button"
+								id="add-module-button"
 							>
 								Add Module
 							</button>
 							<button
 								onclick="showPopup('add-project')"
 								type="button"
+								id="add-project-button"
+								class="add-project-button"
 							>
 								Add Project
 							</button>
 							<button
 								type="button"
-								onclick="alert('Pendiente de implementar y rediseñar')"
+								id="edit-module-button"
+								class="edit-module-button"
+								onclick="showPopup('edit-module')"
 							>
 								Edit Module
 							</button>
 							<button
 								type="button"
-								onclick="alert('Pendiente de implementar y rediseñar')"
+								id="remove-module-button"
+								class="remove-module-button"
+								onclick="showPopup('remove-module')"
 							>
 								Remove Module
 							</button>
-						</div>
-						<div
-							class="popup"
-							id="add-module"
-							style="display: none"
-						>
-							<span
-								class="popup-close"
-								onclick="hidePopup('add-module')"
-								>×</span
+							<button
+								type="button"
+								id="edit-project-button"
+								class="edit-project-button"
+								onclick="showPopup('edit-project')"
 							>
-							<h3>Add Module</h3>
-							<input
-								type="text"
-								placeholder="Module Name"
-								id="module-title"
-							/>
-							<button onclick="addModule()">Add Module</button>
-						</div>
-						<div
-							class="popup"
-							id="add-project"
-							style="display: none"
-						>
-							<span
-								class="popup-close"
-								onclick="hidePopup('add-project')"
-								>×</span
+								Edit Project
+							</button>
+							<button
+								type="button"
+								id="remove-project-button"
+								class="remove-project-button"
+								onclick="showPopup('remove-project')"
 							>
-							<h3>Add Project</h3>
-							<input
-								type="text"
-								placeholder="Module Title"
-								id="module-project-title"
-							/>
-							<input
-								type="text"
-								placeholder="Project Title"
-								id="project-title"
-							/><input
-								type="text"
-								placeholder="Project Description"
-								id="project-description"
-							/>
-							<button onclick="addProject()">Add Project</button>
+								Remove Project
+							</button>
+						</div>
+
+						<!--popups-->
+						<div class="popup-area">
+							<div
+								class="popup"
+								id="add-module"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('add-module')"
+									>×</span
+								>
+								<h3>Add Module</h3>
+								<input
+									type="text"
+									placeholder="Module Name"
+									id="module-title"
+								/>
+								<button onclick="addModule(this)">
+									Add Module
+								</button>
+							</div>
+
+							<div
+								class="popup"
+								id="edit-module"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('edit-module')"
+									>×</span
+								>
+								<h3>Edit Module</h3>
+								<input
+									type="text"
+									placeholder="New Module Name"
+									id="edit-module-title"
+								/>
+								<button onclick="editModule()">
+									Edit Module
+								</button>
+							</div>
+
+							<div
+								class="popup"
+								id="add-project"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('add-project')"
+									>×</span
+								>
+								<h3>Add Project</h3>
+								<input
+									type="text"
+									placeholder="Module Title"
+									id="module-project-title"
+								/>
+								<input
+									type="text"
+									placeholder="Project Title"
+									id="project-title"
+								/><input
+									type="text"
+									placeholder="Project Description"
+									id="project-description"
+								/>
+								<button onclick="addProject()">
+									Add Project
+								</button>
+							</div>
+
+							<div
+								class="popup"
+								id="edit-project"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('edit-project')"
+									>×</span
+								>
+								<h3>Edit Project</h3>
+								<input
+									type="text"
+									placeholder="Project Title"
+									id="edit-project-title"
+								/><input
+									type="text"
+									placeholder="Project Description"
+									id="edit-project-description"
+								/>
+								<button onclick="editProject()">
+									Edit Project
+								</button>
+							</div>
 						</div>
 					</div>
 					<div class="main-content-container">
 						<div class="projects-container">
-							<h2>Module 1: Programming Introduction</h2>
+							<h2 onclick="selectModule(this)">
+								Module 1: Programming Introduction
+							</h2>
 							<div
 								id="Module 1: Programming Introduction"
 								class="projects-cards-container"
+								onclick="selectProject(this)"
 							>
 								<div class="card">
 									<h3>Super Cool Project</h3>
@@ -193,7 +275,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="tasks" style="display: none">
+				<div class="main-content" id="tasks" style="display: none">
 					<h2>Tasks</h2>
 					<form class="task-form" onsubmit="addTask(event)">
 						<input
@@ -230,15 +312,15 @@
 						<tbody id="task-list"></tbody>
 					</table>
 				</div>
-				<div id="profile" style="display: none">
+				<div class="main-content" id="profile" style="display: none">
 					<h2>Profile</h2>
 					<p>User Information</p>
 				</div>
-				<div id="messages" style="display: none">
+				<div class="main-content" id="messages" style="display: none">
 					<h2>Messages</h2>
 					<p>Chat Area</p>
 				</div>
-				<div id="games" style="display: none">
+				<div class="main-content" id="games" style="display: none">
 					<h2>Games</h2>
 					<p>Game Area</p>
 				</div>

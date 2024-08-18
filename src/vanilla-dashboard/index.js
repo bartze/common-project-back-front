@@ -256,7 +256,7 @@ function findTaskIndex(projectIndex, taskTitle) {
 }
 
 // Example usage:
-console.table('===========INITIALIZIN MEMORY TABLE===============');
+console.table('===========INITIALIZING MEMORY TABLE===============');
 console.table(state.modules);
 
 // Create a new module
@@ -467,7 +467,9 @@ function hidePopup(id) {
 	document.getElementById(id).style.display = 'none';
 }
 
-function addModule() {
+let selectedModule = null;
+
+function addModule(element) {
 	// refactor task - cache elements on variables
 	const moduleTitle = document.getElementById('module-title').value;
 
@@ -487,14 +489,57 @@ function addModule() {
 
 	homeContent.innerHTML += `
       <div class="main-content-container">
-        <div id="${moduleTitle}" class="projects-container">
-          <h2>${moduleTitle}</h2>
+	  	<div class="projects-container">
+	  		<h2 onclick="selectModule(this)">${moduleTitle}</h2>
+			<div id="${moduleTitle}" class="projects-cards-container" onclick="selectProject(this)"></div>
         </div>
       </div>
   `;
 
 	hidePopup('add-module');
 }
+
+function editModule() {
+	const moduleTitle = document.getElementById('edit-module-title').value;
+
+	selectedModule.innerText = moduleTitle;
+
+	updateModule({
+		id: null,
+		title: moduleTitle,
+		description: 'Description',
+		published: true,
+		status: 'doing',
+		projects: 'none',
+	});
+
+	hidePopup('edit-module');
+	selectModule(selectedModule);
+}
+
+function removeModule(id) {
+	deleteModule(id);
+}
+
+function selectModule(node) {
+	if (selectedModule === null) {
+		selectedModule = node;
+		node.style.color = 'orange';
+		document.getElementById('add-module-button').style.display = 'none';
+		document.getElementById('add-project-button').style.display = 'none';
+		document.getElementById('edit-module-button').style.display = 'block';
+		document.getElementById('remove-module-button').style.display = 'block';
+	} else {
+		selectedModule = null;
+		node.style.color = 'black';
+		document.getElementById('add-module-button').style.display = 'block';
+		document.getElementById('add-project-button').style.display = 'block';
+		document.getElementById('edit-module-button').style.display = 'none';
+		document.getElementById('remove-module-button').style.display = 'none';
+	}
+}
+
+let selectedProject = null;
 
 function addProject() {
 	const moduleTitle = document
@@ -507,6 +552,7 @@ function addProject() {
 	).value;
 
 	const projectCard = document.getElementById(moduleTitle);
+
 	if (!projectCard) alert('Error - The project name is incorrect');
 
 	createProject({
@@ -520,7 +566,7 @@ function addProject() {
 	});
 
 	projectCard.innerHTML += `
-    <div class="card">
+    							<div class="card">
 									<h3>${projectTitle}</h3>
 									<p>
 										${projectDescription}
@@ -547,7 +593,74 @@ function addProject() {
 	hidePopup('add-project');
 }
 
-// viene de un formulario o sea que guay habra que prevenir
+function editProject() {
+	const projectTitle = document.getElementById('edit-project-title').value;
+	const projectDescription = document.getElementById(
+		'edit-project-description',
+	).value;
+
+	const projectCard = document.getElementById(selectedProject.id);
+
+	if (!projectCard) alert('Error - The project name is incorrect');
+
+	updateProject({
+		id: null,
+		title: projectTitle,
+		description: projectDescription,
+		published: true,
+		status: 'doing',
+		module: selectedProject.id,
+		tasks: 'none',
+	});
+
+	projectCard.innerHTML = `
+    <div class="card">
+									<h3>${projectTitle}</h3>
+									<p>
+										${projectDescription}
+									</p>
+									<div class="action-container">
+										<img
+											src="Assets/icons/like.svg"
+											alt="Like Icon"
+										/>
+										<img
+											src="Assets/icons/follow.svg"
+											alt="Follow Icon"
+										/>
+										<img
+											src="Assets/icons/connect.svg"
+											alt="Connect Icon"
+										/>
+									</div>
+								</div>
+    </div>
+  </div>
+`;
+
+	hidePopup('edit-project');
+	selectProject(selectedProject);
+}
+
+function selectProject(node) {
+	if (selectedProject === null) {
+		selectedProject = node;
+		node.style.border = 'solid 2px orange';
+		document.getElementById('add-module-button').style.display = 'none';
+		document.getElementById('add-project-button').style.display = 'none';
+		document.getElementById('edit-project-button').style.display = 'block';
+		document.getElementById('remove-project-button').style.display =
+			'block';
+	} else {
+		selectedProject = null;
+		node.removeAttribute('style');
+		document.getElementById('add-module-button').style.display = 'block';
+		document.getElementById('add-project-button').style.display = 'block';
+		document.getElementById('edit-project-button').style.display = 'none';
+		document.getElementById('remove-project-button').style.display = 'none';
+	}
+}
+
 function addTask(event) {
 	event.preventDefault();
 
