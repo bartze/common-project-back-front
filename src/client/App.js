@@ -11,6 +11,7 @@ import Tasks from './components/tasks/tasks.component';
 import Games from './components/games/games.component';
 import Profile from './components/profile/profile.component';
 import './App.css';
+import Components from './components/catalog/catalog.component';
 
 // Context for managing modules and projects
 const AppContext = createContext();
@@ -113,6 +114,7 @@ const App = () => {
 						<Route path="/tasks" element={<Tasks />} />
 						<Route path="/profile" element={<Profile />} />
 						<Route path="/games" element={<Games />} />
+						<Route path="/components" element={<Components />} />
 						<Route path="/" element={<Home />} />
 						<Route path="/module/:moduleId" element={<Module />} />
 						<Route
@@ -144,6 +146,9 @@ const SideMenu = () => {
 				</li>
 				<li>
 					<Link to="/games">Games</Link>
+				</li>
+				<li>
+					<Link to="/components">Components Lab</Link>
 				</li>
 			</ul>
 		</div>

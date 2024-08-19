@@ -91,6 +91,7 @@
 		"@types/node": "^18.11.18",
 		"@types/sqlite3": "^3.1.8",
 		"@xenova/transformers": "^2.17.2",
+		"antd": "^5.20.1",
 		"axios": "^0.27.2",
 		"babel-jest": "^27.4.2",
 		"babel-plugin-named-asset-import": "^0.3.8",
