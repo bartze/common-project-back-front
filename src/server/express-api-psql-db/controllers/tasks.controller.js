@@ -1,8 +1,8 @@
 const db = require('../models');
-const Module = db.modules;
+const Task = db.tasks;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Module
+// Create and Save a new Task
 exports.create = (req, res) => {
 	// Validate request
 	if (!req.body.title) {
@@ -12,27 +12,26 @@ exports.create = (req, res) => {
 		return;
 	}
 
-	// Create a Module
+	// Create a Task
 	const module = {
 		id: req.body.id,
 		title: req.body.title,
 		description: req.body.description,
 		published: req.body.published ? req.body.published : false,
 		status: req.body.status,
-		projects: req.body.projects,
+		project: req.body.project,
 	};
 
-	// Save Module in the database
-	Module.create(module)
+	// Save Task in the database
+	Task.create(module)
 		.then((data) => {
 			res.send(data);
 		})
 		.catch((err) => {
-			console.log(err);
 			res.status(500).send({
 				message:
 					err.message ||
-					'Some error occurred while creating the Module.',
+					'Some error occurred while creating the Task.',
 			});
 		});
 };
@@ -42,7 +41,7 @@ exports.findAll = (req, res) => {
 	const title = req.query.title;
 	var condition = title ? { title: { [Op.like]: `%${title}%` } } : null;
 
-	Module.findAll({ where: condition })
+	Task.findAll({ where: condition })
 		.then((data) => {
 			res.send(data);
 		})
@@ -55,85 +54,85 @@ exports.findAll = (req, res) => {
 		});
 };
 
-// Find a single Module with an id
+// Find a single Task with an id
 exports.findOne = (req, res) => {
 	const id = req.params.id;
 
-	Module.findByPk(id)
+	Task.findByPk(id)
 		.then((data) => {
 			if (data) {
 				res.send(data);
 			} else {
 				res.status(404).send({
-					message: `Cannot find Module with id=${id}.`,
+					message: `Cannot find Task with id=${id}.`,
 				});
 			}
 		})
 		.catch((err) => {
 			res.status(500).send({
-				message: 'Error retrieving Module with id=' + id,
+				message: 'Error retrieving Task with id=' + id,
 			});
 		});
 };
 
-// Update a Module by the id in the request
+// Update a Task by the id in the request
 exports.update = (req, res) => {
 	const id = req.params.id;
 
-	Module.update(req.body, {
+	Task.update(req.body, {
 		where: { id: id },
 	})
 		.then((num) => {
 			if (num == 1) {
 				res.send({
-					message: 'Module was updated successfully with id. ' + id,
+					message: 'Task was updated successfully.',
 				});
 			} else {
 				res.send({
-					message: `Cannot update Module with id=${id}. Maybe Module was not found or req.body is empty!`,
+					message: `Cannot update Task with id=${id}. Maybe Task was not found or req.body is empty!`,
 				});
 			}
 		})
 		.catch((err) => {
 			res.status(500).send({
-				message: 'Error updating Module with id=' + id,
+				message: 'Error updating Task with id=' + id,
 			});
 		});
 };
 
-// Delete a Module with the specified id in the request
+// Delete a Task with the specified id in the request
 exports.delete = (req, res) => {
 	const id = req.params.id;
 
-	Module.destroy({
+	Task.destroy({
 		where: { id: id },
 	})
 		.then((num) => {
 			if (num == 1) {
 				res.send({
-					message: 'Module was deleted successfully!',
+					message: 'Task was deleted successfully!',
 				});
 			} else {
 				res.send({
-					message: `Cannot delete Module with id=${id}. Maybe Module was not found!`,
+					message: `Cannot delete Task with id=${id}. Maybe Task was not found!`,
 				});
 			}
 		})
 		.catch((err) => {
 			res.status(500).send({
-				message: 'Could not delete Module with id=' + id,
+				message: 'Could not delete Task with id=' + id,
 			});
 		});
 };
 
-// Delete all Modules from the database.
+// Delete all Tasks from the database.
 exports.deleteAll = (req, res) => {
-	Module.destroy({
+	Task.destroy({
 		where: {},
 		truncate: false,
 	})
 		.then((nums) => {
-			res.send({ message: `${nums} Modules were deleted successfully!` });
+			res.send({ message: `${nums} Tasks were deleted successfully!` });
 		})
 		.catch((err) => {
 			res.status(500).send({
@@ -144,9 +143,9 @@ exports.deleteAll = (req, res) => {
 		});
 };
 
-// find all published Module
+// find all published Task
 exports.findAllPublished = (req, res) => {
-	Module.findAll({ where: { published: true } })
+	Task.findAll({ where: { published: true } })
 		.then((data) => {
 			res.send(data);
 		})
@@ -158,3 +157,9 @@ exports.findAllPublished = (req, res) => {
 			});
 		});
 };
+
+/* exports.chat = (req, res) => {
+	console.log('chat', process.cwd());
+	console.log(process.cwd() + '/public/chat.html');
+	res.sendFile(process.cwd() + '/public/chat.html'); 
+}; */

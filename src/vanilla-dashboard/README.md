@@ -10,8 +10,8 @@ The current work in progress is being done in the demo.html file.
 
 To run this project, you need to have the following tools installed:
 
-- Node.js
-- npm
+-   Node.js
+-   npm
 
 After installing the tools, you can run the following commands:
 
@@ -59,4 +59,13 @@ For the demo app use the following URL:
 http://localhost:3000/demo.html
 ```
 
+chuleta
 
+modulos
+
+projectos
+
+tareas
+
+rutas y tablas creadas
+se ha mirado un tema de sequelize v7 con sintaxis esm y demás en zplugin

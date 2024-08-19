@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Proyecto Albañiles Digitales</title>
+		<link rel="stylesheet" href="stylesheet.css" />
+	</head>
+
+	<body>
+		<div class="grid-container">
+			<div class="sidebar">
+				<div class="sidebar-title">
+					<img
+						src="assets/icons/dashboard.svg"
+						alt="Icon"
+						class="dashboard-icon"
+					/>
+					<span>Dashboard</span>
+				</div>
+				<ul class="sidebar-list">
+					<li class="sidebar-list-item" onclick="showContent('home')">
+						<img
+							src="assets/icons/home.svg"
+							alt="Icon"
+							class="icon"
+						/>
+						<span>Home</span>
+					</li>
+					<li
+						class="sidebar-list-item"
+						onclick="showContent('tasks')"
+					>
+						<img
+							src="assets/icons/task.svg"
+							alt="Icon"
+							class="icon"
+						/>
+						<span>Tasks</span>
+					</li>
+					<li
+						class="sidebar-list-item"
+						onclick="showContent('profile')"
+					>
+						<img
+							src="assets/icons/profile.svg"
+							alt="Icon"
+							class="icon"
+						/>
+						<span>Profile</span>
+					</li>
+					<li
+						class="sidebar-list-item"
+						onclick="showContent('messages')"
+					>
+						<img
+							src="assets/icons/messages.svg"
+							alt="Icon"
+							class="icon"
+						/>
+						<span>Messages</span>
+					</li>
+					<li
+						class="sidebar-list-item communities"
+						onclick="showContent('games')"
+					>
+						<img
+							src="assets/icons/group.svg"
+							alt="Icon"
+							class="icon"
+						/>
+						<span>Games</span>
+					</li>
+				</ul>
+			</div>
+			<div class="content">
+				<div class="main-content" id="home">
+					<div class="header">
+						<div class="greeting-area">
+							<img
+								src="https://i.pravatar.cc/90"
+								alt="Profile picture"
+								width="90"
+								height="90"
+								class="profile-picture"
+							/>
+							<div class="specific-greeting">
+								<p>Hi there,</p>
+								<p>Shrek Example (@shrexample)</p>
+							</div>
+						</div>
+						<!--action buttons-->
+						<div class="action-area">
+							<button
+								onclick="showPopup('add-module')"
+								type="button"
+								id="add-module-button"
+							>
+								Add Module
+							</button>
+							<button
+								onclick="showPopup('add-project')"
+								type="button"
+								id="add-project-button"
+								class="add-project-button"
+							>
+								Add Project
+							</button>
+							<button
+								type="button"
+								id="edit-module-button"
+								class="edit-module-button"
+								onclick="showPopup('edit-module')"
+							>
+								Edit Module
+							</button>
+							<button
+								type="button"
+								id="remove-module-button"
+								class="remove-module-button"
+								onclick="showPopup('remove-module')"
+							>
+								Remove Module
+							</button>
+							<button
+								type="button"
+								id="edit-project-button"
+								class="edit-project-button"
+								onclick="showPopup('edit-project')"
+							>
+								Edit Project
+							</button>
+							<button
+								type="button"
+								id="remove-project-button"
+								class="remove-project-button"
+								onclick="showPopup('remove-project')"
+							>
+								Remove Project
+							</button>
+						</div>
+
+						<!--popups-->
+						<div class="popup-area">
+							<div
+								class="popup"
+								id="add-module"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('add-module')"
+									>×</span
+								>
+								<h3>Add Module</h3>
+								<input
+									type="text"
+									placeholder="Module Name"
+									id="module-title"
+								/>
+								<button onclick="addModule(this)">
+									Add Module
+								</button>
+							</div>
+
+							<div
+								class="popup"
+								id="edit-module"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('edit-module')"
+									>×</span
+								>
+								<h3>Edit Module</h3>
+								<input
+									type="text"
+									placeholder="New Module Name"
+									id="edit-module-title"
+								/>
+								<button onclick="editModule()">
+									Edit Module
+								</button>
+							</div>
+
+							<div
+								class="popup"
+								id="remove-module"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('remove-module')"
+									>×</span
+								>
+								<h3>Remove Module</h3>
+								<input type="text" hidden />
+								<span>¿Do you want to delete this module?</span>
+								<button onclick="removeModule()">
+									Remove Module
+								</button>
+							</div>
+
+							<div
+								class="popup"
+								id="add-project"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('add-project')"
+									>×</span
+								>
+								<h3>Add Project</h3>
+								<input
+									type="text"
+									placeholder="Module Title"
+									id="module-project-title"
+								/>
+								<input
+									type="text"
+									placeholder="Project Title"
+									id="project-title"
+								/><input
+									type="text"
+									placeholder="Project Description"
+									id="project-description"
+								/>
+								<button onclick="addProject()">
+									Add Project
+								</button>
+							</div>
+
+							<div
+								class="popup"
+								id="edit-project"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('edit-project')"
+									>×</span
+								>
+								<h3>Edit Project</h3>
+								<input
+									type="text"
+									placeholder="Project Title"
+									id="edit-project-title"
+								/><input
+									type="text"
+									placeholder="Project Description"
+									id="edit-project-description"
+								/>
+								<button onclick="editProject()">
+									Edit Project
+								</button>
+							</div>
+
+							<div
+								class="popup"
+								id="remove-project"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('remove-project')"
+									>×</span
+								>
+								<h3>Remove Project</h3>
+								<input type="text" hidden />
+								<span
+									>¿Do you want to delete this project?</span
+								>
+								<button onclick="removeProject()">
+									Remove Project
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="main-content-container">
+						<div class="projects-container">
+							<h2 onclick="selectModule(this)">
+								Module 1: Programming Introduction
+							</h2>
+							<div
+								id="Module 1: Programming Introduction"
+								class="projects-cards-container"
+							>
+								<div
+									id="Super Cool Project"
+									class="card"
+									onclick="selectProject(this)"
+								>
+									<h3>Super Cool Project</h3>
+									<p>
+										Lorem ipsum dolor sit amet, consectetur
+										adipiscing elit, sed do eiusmod tempor
+										incididunt ut labore et dolore magna
+										aliqua.
+									</p>
+									<div class="action-container">
+										<img
+											src="assets/icons/like.svg"
+											alt="Like Icon"
+										/>
+										<img
+											src="assets/icons/follow.svg"
+											alt="Follow Icon"
+										/>
+										<img
+											src="assets/icons/connect.svg"
+											alt="Connect Icon"
+										/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="main-content" id="tasks" style="display: none">
+					<h2>Tasks</h2>
+					<form class="task-form" onsubmit="addTask(event)">
+						<input
+							type="text"
+							placeholder="Task Title"
+							id="task-title"
+							value="Task Title"
+						/>
+						<input
+							type="text"
+							placeholder="Task Project Name"
+							id="task-project"
+							value="Task Project Name"
+						/>
+						<input
+							type="text"
+							placeholder="Task Status"
+							id="task-status"
+							value="Task Status"
+						/>
+						<textarea
+							placeholder="Task Description"
+							id="task-description"
+							value="Task Description"
+						></textarea>
+						<button type="submit">Add Task</button>
+					</form>
+					<ul class="task-list" id="task-list-old"></ul>
+					<table style="border: 2px solid darkblue; width: 100%;">
+						<thead>
+							<tr>
+								<th>Task Title</th>
+								<th>Project Name</th>
+								<th>Description</th>
+								<th>Status</th>
+								<th>Published</th>
+							</tr>
+						</thead>
+						<tbody id="task-list"></tbody>
+					</table>
+				</div>
+				<div class="main-content" id="profile" style="display: none">
+					<h2>Profile</h2>
+					<p>User Information</p>
+				</div>
+				<div class="main-content" id="messages" style="display: none">
+					<h2>Messages</h2>
+					<p>Chat Area</p>
+				</div>
+				<div class="main-content" id="games" style="display: none">
+					<h2>Games</h2>
+					<p>Game Area</p>
+				</div>
+			</div>
+		</div>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script src="index.js"></script>
+	</body>
+</html>

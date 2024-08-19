@@ -5,7 +5,7 @@ const sqlite = require('sqlite3');
 const { Server } = require('socket.io');
 const setRoutesConfig = require('./express-api-psql-db/routes/modules.routes');
 const corsOptions = {
-	origin: 'http://localhost:8081',
+	origin: '*', //'http://localhost:8081',
 };
 
 const app = express();
@@ -20,9 +20,9 @@ setRoutesConfig(app);
 const db = require('./express-api-psql-db/models');
 
 db.sequelize
-	.sync()
+	.sync({ force: true })
 	.then((e) => {
-		console.log('Synced db.');
+		console.log('Synced db version ', e.options.databaseVersion);
 	})
 	.catch((err) => {
 		console.log('Failed to sync SEQUELIZE DB: ' + err.message);

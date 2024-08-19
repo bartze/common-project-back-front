@@ -1,5 +1,7 @@
+const { type } = require('os');
+
 module.exports = (sequelize, Sequelize) => {
-	const Module = sequelize.define('Module', {
+	const Project = sequelize.define('Project', {
 		id: {
 			type: Sequelize.UUID,
 			primaryKey: true,
@@ -16,10 +18,13 @@ module.exports = (sequelize, Sequelize) => {
 		status: {
 			type: Sequelize.STRING,
 		},
-		projects: {
+		module: {
+			type: Sequelize.STRING, // should be a primary keyetc..
+		},
+		tasks: {
 			type: Sequelize.STRING, // should be another table
 		},
 	});
 
-	return Module;
+	return Project;
 };

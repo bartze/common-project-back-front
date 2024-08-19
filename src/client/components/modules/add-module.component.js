@@ -14,7 +14,6 @@ export default class AddModule extends Component {
 			title: '',
 			description: '',
 			published: false,
-
 			submitted: false,
 		};
 	}

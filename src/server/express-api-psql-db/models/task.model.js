@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-	const Module = sequelize.define('Module', {
+	const Task = sequelize.define('Task', {
 		id: {
 			type: Sequelize.UUID,
 			primaryKey: true,
@@ -16,10 +16,10 @@ module.exports = (sequelize, Sequelize) => {
 		status: {
 			type: Sequelize.STRING,
 		},
-		projects: {
-			type: Sequelize.STRING, // should be another table
+		project: {
+			type: Sequelize.STRING,
 		},
 	});
 
-	return Module;
+	return Task;
 };

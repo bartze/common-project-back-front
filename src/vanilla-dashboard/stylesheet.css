@@ -3,6 +3,7 @@ html, body {
     height: 100%;
 }
 
+
 .grid-container {
     height: 100vh;
     /*padding: 0 10% 0 10%;*/
@@ -38,7 +39,7 @@ html, body {
     grid-template-areas:
         "search-bar profile-area"
         "greeting-area action-area";
-    background-color: #FFFFFF;
+    background-color: white ;
     padding: 30px 40px 20px 40px;
 }
 
@@ -149,11 +150,12 @@ button {
 }
 
 .card {
-    background-color: #FFFFFF;
+    background-color: #fff;
     border-radius: 1rem;
     padding: 2.4rem;
     position: relative;
-    border-left: 0.8rem solid orange;
+    border-left: 0.8rem solid #1992D4;
+    cursor: pointer;
 }
 
 .card p{
@@ -190,3 +192,32 @@ h4 {
     margin: 20px 0 10px 0;
 }
 
+h2 {
+    cursor: pointer;
+}
+
+h2:hover {
+    color: orange;
+}
+
+.edit-module-button {
+    display: none;
+}
+
+.remove-module-button {
+    display: none;
+}
+
+.edit-project-button {
+    display: none;
+}
+
+.remove-project-button {
+    display: none;
+}
+
+.profile-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
