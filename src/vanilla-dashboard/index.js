@@ -506,8 +506,9 @@ function removeModule() {
 		selectedProject.remove();
 	}
 	hidePopup('remove-module');
-	// reset ui buttons
-	resetUI;
+	// unselect the module after confirm
+	selectModule(selectedModule);
+	resetUI();
 }
 
 function selectModule(node) {
