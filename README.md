@@ -115,13 +115,24 @@ There are the following folders and files in the client folder:
 
 ## Roadmap
 
+### platform and tools
+
 -   [ ] 1. Create the project structure client and server side code
 -   [ ] 1. Review build serve format lint and test tools:
     -   [ ] webpack env should be reviewed in order to maintain a correct control of the development and production builds for the different client and server apps
     -   [ ] the chats projects for core node should be defined in order to choose the best method to integrate both apps in the project, now the socket is a basic poc on the react app and the chat with ia is an embedded project deployed in parallel. The core node project pretends to integrate the parallel project in html inside the react project as a separate route/link(if this is possible all the documentation would be done with reveal.js as project solution).
 -   [ ] 1. add cross-env to modify env using package.json script, ex `"build:server": "echo cross-env SERVER_BUILD=true node webpack.build.js"`
 -   [ ] 1. add testing coverage
+
+### apps
+
 -   [ ] 1. Migrate the tmp folder to the project - WIP + iperez review
+-   [ ] Adding visual functionality the fast way to then make a good refactor exercise explaining this process
+-   [ ] Current bugs:
+
+          - [ ] DOM CRUD IS CAOS - medium choose a best dom control method using a css control instead dom tab manipulation
+          - [ ] JSON FILE SHOULD BE UPDATED - easy - call em -> after call the json sanitize the dom :D
+          - [ ] DATABASE IS NOT USING IDS - easy - use em - doing
 
 ## Contributing
 

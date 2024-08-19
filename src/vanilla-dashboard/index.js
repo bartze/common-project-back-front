@@ -83,13 +83,17 @@ const state = {
 	],
 };
 
+function setId() {
+	return crypto.randomUUID();
+}
+
 // funcion de crud sobre los datos de demostración
 // el objetivo es tener un modo de controlar los datos
 // de tal manera que si vamos a usar pop ups
 // si creamos modulos proyectos y tareas
 // podamos controlar su relación desde el front inicialmente
 // para posteriormente pasar a un sistema de consultas mas sofisticado
-function crudJson(
+function update_state(
 	operation,
 	data,
 	moduleTitle = null,
@@ -260,7 +264,7 @@ console.table('===========INITIALIZING MEMORY TABLE===============');
 console.table(state.modules);
 
 // Create a new module
-crudJson('createModule', {
+update_state('createModule', {
 	title: 'Database Development',
 	description:
 		'Learn to design and implement databases for web applications.',
@@ -270,7 +274,7 @@ crudJson('createModule', {
 });
 
 // Create a new project under an existing module
-crudJson(
+update_state(
 	'createProject',
 	{
 		title: 'SQL Fundamentals',
@@ -285,7 +289,7 @@ crudJson(
 );
 
 // Create a new task under an existing project
-crudJson(
+update_state(
 	'createTask',
 	{
 		title: 'Learn SQL Syntax',
@@ -299,50 +303,10 @@ crudJson(
 	'Learn SQL Syntax',
 );
 
-/* // Update a module
-crudJson(
-	'updateModule',
-	{
-		description:
-			'Learn how to design and implement robust databases for web applications.',
-	},
-	'Database Development',
-);
-
-// Update a project
-crudJson(
-	'updateProject',
-	{
-		status: 'In Progress',
-	},
-	'Database Development',
-	'SQL Fundamentals',
-);
-
-// Update a task
-crudJson(
-	'updateTask',
-	{
-		status: 'Completed',
-	},
-	'Database Development',
-	'SQL Fundamentals',
-	'Learn SQL Syntax',
-); */
-
 console.table('===========INIT DONE===============');
 console.table(state.modules);
 
-/* // Delete a task
-crudJson("deleteTask", null, "Database Development", "SQL Fundamentals", "Learn SQL Syntax");
-
-// Delete a project (will be deleted if empty)
-crudJson("deleteProject", null, "Database Development", "SQL Fundamentals");
-
-// Delete a module (will be deleted if empty)
-crudJson("deleteModule", null, "Database Development"); */
-
-crudJson('createModule', {
+update_state('createModule', {
 	title: 'Database Code Review and Refactor',
 	description:
 		'Learn to refactor the implemented databases for the current web application.',
@@ -376,6 +340,7 @@ function createModule(data) {
 }
 
 function updateModule(id, data) {
+	console.log(id, data);
 	return http.put(`/module/${id}`, data);
 }
 
@@ -469,17 +434,17 @@ function hidePopup(id) {
 
 let selectedModule = null;
 
-function addModule(element) {
-	// refactor task - cache elements on variables
-	const moduleTitle = document.getElementById('module-title').value;
-
+function addModule() {
 	const homeContent = document.querySelector('.main-content');
-
 	// refactor task - add feedback with html
 	if (!homeContent) alert("Error - The module can't be created");
 
+	const id = setId();
+	// refactor task - cache elements on variables
+	const moduleTitle = document.getElementById('module-title').value;
+
 	createModule({
-		id: null,
+		id,
 		title: moduleTitle,
 		description: 'Description',
 		published: true,
@@ -491,22 +456,30 @@ function addModule(element) {
       <div class="main-content-container">
 	  	<div class="projects-container">
 	  		<h2 onclick="selectModule(this)">${moduleTitle}</h2>
-			<div id="${moduleTitle}" class="projects-cards-container" onclick="selectProject(this)"></div>
+			<div id="${moduleTitle}" class="projects-cards-container"></div>
         </div>
       </div>
   `;
 
 	hidePopup('add-module');
+	resetUI();
 }
 
 function editModule() {
 	const moduleTitle = document.getElementById('edit-module-title').value;
 
+	if (!moduleTitle) alert("Error - The module can't be edited");
+
+	const id = setId();
 	document.getElementById(selectedModule.innerText).id = moduleTitle;
-	selectedModule.innerText = moduleTitle;
+	// pruebas con data y uuid
+	/* if (document.getElementById(selectedModule.innerText).data) {
+		document.getElementById(selectedModule.innerText).data = id;
+	}
+	 */ selectedModule.innerText = moduleTitle;
 
 	updateModule({
-		id: null,
+		id,
 		title: moduleTitle,
 		description: 'Description',
 		published: true,
@@ -515,24 +488,41 @@ function editModule() {
 	});
 
 	hidePopup('edit-module');
+	// unselect the module after confirm
 	selectModule(selectedModule);
+	resetUI();
 }
 
-function removeModule(id) {
-	deleteModule(id);
+function removeModule() {
+	// deleteModule();
+	console.log(selectedModule);
+	console.log(state);
+
+	// use update_state to check the projects
+	selectedModule.remove();
+	console.log(selectedModule.nextElementSibling);
+	if (selectedModule.nextElementSibling) {
+		selectProject(selectedModule.nextElementSibling);
+		selectedProject.remove();
+	}
+	hidePopup('remove-module');
+	// reset ui buttons
+	resetUI;
 }
 
 function selectModule(node) {
+	if (!node) resetUI();
+
 	if (selectedModule === null) {
 		selectedModule = node;
-		node.style.color = 'orange';
+		if (node) node.style.color = 'orange';
 		document.getElementById('add-module-button').style.display = 'none';
 		document.getElementById('add-project-button').style.display = 'none';
 		document.getElementById('edit-module-button').style.display = 'block';
 		document.getElementById('remove-module-button').style.display = 'block';
 	} else {
 		selectedModule = null;
-		node.style.color = 'black';
+		if (node) node.style.color = 'black';
 		document.getElementById('add-module-button').style.display = 'block';
 		document.getElementById('add-project-button').style.display = 'block';
 		document.getElementById('edit-module-button').style.display = 'none';
@@ -546,18 +536,19 @@ function addProject() {
 	const moduleTitle = document
 		.getElementById('module-project-title')
 		.value.trim();
+	const projectCard = document.getElementById(moduleTitle);
+
+	if (!projectCard) alert('Error - The project name is incorrect');
 
 	const projectTitle = document.getElementById('project-title').value;
 	const projectDescription = document.getElementById(
 		'project-description',
 	).value;
 
-	const projectCard = document.getElementById(moduleTitle);
-
-	if (!projectCard) alert('Error - The project name is incorrect');
+	const id = setId();
 
 	createProject({
-		id: null,
+		id,
 		title: projectTitle,
 		description: projectDescription,
 		published: true,
@@ -567,7 +558,7 @@ function addProject() {
 	});
 
 	projectCard.innerHTML += `
-    							<div class="card">
+    <div id=${projectTitle} class="card" data=${id} onclick="selectProject(this)">
 									<h3>${projectTitle}</h3>
 									<p>
 										${projectDescription}
@@ -604,8 +595,11 @@ function editProject() {
 
 	if (!projectCard) alert('Error - The project name is incorrect');
 
+	// use this id in the dom refacotr
+	const id = setId();
+
 	updateProject({
-		id: null,
+		id,
 		title: projectTitle,
 		description: projectDescription,
 		published: true,
@@ -615,7 +609,7 @@ function editProject() {
 	});
 
 	projectCard.innerHTML = `
-    <div id=${projectTitle} class="card" onclick="selectProject(this)">
+    <div id=${projectTitle} class="card" data=${id} onclick="selectProject(this)">
 									<h3>${projectTitle}</h3>
 									<p>
 										${projectDescription}
@@ -644,9 +638,11 @@ function editProject() {
 }
 
 function selectProject(node) {
+	if (!node) resetUI();
+
 	if (selectedProject === null) {
 		selectedProject = node;
-		node.style.border = 'solid 2px orange';
+		if (node) node.style.border = 'solid 2px orange';
 		document.getElementById('add-module-button').style.display = 'none';
 		document.getElementById('add-project-button').style.display = 'none';
 		document.getElementById('edit-project-button').style.display = 'block';
@@ -654,7 +650,7 @@ function selectProject(node) {
 			'block';
 	} else {
 		selectedProject = null;
-		node.removeAttribute('style');
+		if (node) node.removeAttribute('style');
 		document.getElementById('add-module-button').style.display = 'block';
 		document.getElementById('add-project-button').style.display = 'block';
 		document.getElementById('edit-project-button').style.display = 'none';
@@ -662,58 +658,88 @@ function selectProject(node) {
 	}
 }
 
+function removeProject() {
+	// deleteModule();
+	console.log(selectedProject);
+	console.log(state);
+	// use update_state to check the projects
+	selectedProject.remove();
+	hidePopup('remove-project');
+	resetUI();
+}
+
 function addTask(event) {
 	event.preventDefault();
 
-	console.log('form event =>', event);
-	const taskTitle = document.getElementById('task-title').value;
-	const taskDescription = document.getElementById('task-description').value;
+	const id = setId();
+	const title = document.getElementById('task-title').value;
+	const description = document.getElementById('task-description').placeholder;
+	const project = document.getElementById('task-project').value;
 	const status = document.getElementById('task-status').value;
-	const projectTitle = document.getElementById('task-project').value;
 
-	createTask({
-		id: null,
-		title: taskTitle,
-		description: taskDescription,
+	const data = {
+		id,
+		title,
+		description,
+		project,
+		status,
 		published: true,
-		status,
-		project: projectTitle,
-	});
+	};
 
+	createTask(data);
 	const tasksTable = document.getElementById('task-list');
-
-	const task = generateTableEntry(
-		taskTitle,
-		taskDescription,
-		projectTitle,
-		status,
-	);
-
+	const task = generateTableEntry(data);
 	tasksTable.appendChild(task);
 }
 
-function generateTableEntry(title, description, projectName, status) {
+// sustituir tabla por componente devextreme ;)
+
+function generateTableEntry({
+	id,
+	title,
+	description,
+	project,
+	status,
+	published,
+}) {
 	// Crea un nuevo elemento de tabla (tr)
 	const tableRow = document.createElement('tr');
+	tableRow.style = 'border: 1px dashed darkblue; text-align: center;';
 
-	tableRow.style = 'border: 1px dashed darkblue';
 	// Crea celdas de tabla (td) para cada dato
 	const titleCell = document.createElement('td');
 	titleCell.textContent = title;
 	tableRow.appendChild(titleCell);
 
+	const projectNameCell = document.createElement('td');
+	projectNameCell.textContent = project;
+	tableRow.appendChild(projectNameCell);
+
 	const descriptionCell = document.createElement('td');
 	descriptionCell.textContent = description;
 	tableRow.appendChild(descriptionCell);
-
-	const projectNameCell = document.createElement('td');
-	projectNameCell.textContent = projectName;
-	tableRow.appendChild(projectNameCell);
 
 	const statusCell = document.createElement('td');
 	statusCell.textContent = status;
 	tableRow.appendChild(statusCell);
 
+	const publishedCell = document.createElement('td');
+	publishedCell.textContent = published;
+	tableRow.appendChild(publishedCell);
+
+	tableRow.setAttribute('id', id);
+	tableRow.setAttribute(
+		'onclick',
+		"confirm('¿Quieres eliminar la tarea con id' + this.id);",
+	);
+
 	// Devuelve la fila de tabla creada
 	return tableRow;
+}
+
+function resetUI() {
+	document.getElementById('add-module-button').style.display = 'block';
+	document.getElementById('add-project-button').style.display = 'block';
+	document.getElementById('edit-project-button').style.display = 'none';
+	document.getElementById('remove-project-button').style.display = 'none';
 }

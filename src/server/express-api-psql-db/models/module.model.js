@@ -1,5 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
 	const Module = sequelize.define('Module', {
+		id: {
+			type: Sequelize.UUID,
+			primaryKey: true,
+		},
 		title: {
 			type: Sequelize.STRING,
 		},

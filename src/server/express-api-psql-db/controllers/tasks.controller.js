@@ -14,6 +14,7 @@ exports.create = (req, res) => {
 
 	// Create a Task
 	const module = {
+		id: req.body.id,
 		title: req.body.title,
 		description: req.body.description,
 		published: req.body.published ? req.body.published : false,

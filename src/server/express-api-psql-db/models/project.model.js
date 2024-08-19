@@ -2,6 +2,10 @@ const { type } = require('os');
 
 module.exports = (sequelize, Sequelize) => {
 	const Project = sequelize.define('Project', {
+		id: {
+			type: Sequelize.UUID,
+			primaryKey: true,
+		},
 		title: {
 			type: Sequelize.STRING,
 		},

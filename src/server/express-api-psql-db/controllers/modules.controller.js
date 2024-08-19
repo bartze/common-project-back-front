@@ -14,6 +14,7 @@ exports.create = (req, res) => {
 
 	// Create a Module
 	const module = {
+		id: req.body.id,
 		title: req.body.title,
 		description: req.body.description,
 		published: req.body.published ? req.body.published : false,
@@ -85,7 +86,7 @@ exports.update = (req, res) => {
 		.then((num) => {
 			if (num == 1) {
 				res.send({
-					message: 'Module was updated successfully.',
+					message: 'Module was updated successfully with id. ' + id,
 				});
 			} else {
 				res.send({
@@ -157,4 +158,3 @@ exports.findAllPublished = (req, res) => {
 			});
 		});
 };
-

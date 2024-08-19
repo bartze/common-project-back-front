@@ -77,10 +77,11 @@
 					<div class="header">
 						<div class="greeting-area">
 							<img
-								src="assets/icons/shrek.png"
+								src="https://i.pravatar.cc/90"
 								alt="Profile picture"
 								width="90"
 								height="90"
+								class="profile-picture"
 							/>
 							<div class="specific-greeting">
 								<p>Hi there,</p>
@@ -184,6 +185,24 @@
 
 							<div
 								class="popup"
+								id="remove-module"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('remove-module')"
+									>×</span
+								>
+								<h3>Remove Module</h3>
+								<input type="text" hidden />
+								<span>¿Do you want to delete this module?</span>
+								<button onclick="removeModule()">
+									Remove Module
+								</button>
+							</div>
+
+							<div
+								class="popup"
 								id="add-project"
 								style="display: none"
 							>
@@ -236,6 +255,26 @@
 									Edit Project
 								</button>
 							</div>
+
+							<div
+								class="popup"
+								id="remove-project"
+								style="display: none"
+							>
+								<span
+									class="popup-close"
+									onclick="hidePopup('remove-project')"
+									>×</span
+								>
+								<h3>Remove Project</h3>
+								<input type="text" hidden />
+								<span
+									>¿Do you want to delete this project?</span
+								>
+								<button onclick="removeProject()">
+									Remove Project
+								</button>
+							</div>
 						</div>
 					</div>
 					<div class="main-content-container">
@@ -285,31 +324,36 @@
 							type="text"
 							placeholder="Task Title"
 							id="task-title"
+							value="Task Title"
 						/>
 						<input
 							type="text"
 							placeholder="Task Project Name"
 							id="task-project"
+							value="Task Project Name"
 						/>
 						<input
 							type="text"
 							placeholder="Task Status"
 							id="task-status"
+							value="Task Status"
 						/>
 						<textarea
-							placeholder="Description"
+							placeholder="Task Description"
 							id="task-description"
+							value="Task Description"
 						></textarea>
 						<button type="submit">Add Task</button>
 					</form>
 					<ul class="task-list" id="task-list-old"></ul>
-					<table style="border: 2px solid darkblue">
+					<table style="border: 2px solid darkblue; width: 100%;">
 						<thead>
 							<tr>
 								<th>Task Title</th>
 								<th>Project Name</th>
-								<th>Status</th>
 								<th>Description</th>
+								<th>Status</th>
+								<th>Published</th>
 							</tr>
 						</thead>
 						<tbody id="task-list"></tbody>

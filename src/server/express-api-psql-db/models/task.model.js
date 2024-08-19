@@ -1,5 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
 	const Task = sequelize.define('Task', {
+		id: {
+			type: Sequelize.UUID,
+			primaryKey: true,
+		},
 		title: {
 			type: Sequelize.STRING,
 		},

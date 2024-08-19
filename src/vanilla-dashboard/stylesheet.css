@@ -216,3 +216,9 @@ h2:hover {
 .remove-project-button {
     display: none;
 }
+
+.profile-picture {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}

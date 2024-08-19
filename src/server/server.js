@@ -20,9 +20,9 @@ setRoutesConfig(app);
 const db = require('./express-api-psql-db/models');
 
 db.sequelize
-	.sync()
+	.sync({ force: true })
 	.then((e) => {
-		console.log('Synced db.');
+		console.log('Synced db version ', e.options.databaseVersion);
 	})
 	.catch((err) => {
 		console.log('Failed to sync SEQUELIZE DB: ' + err.message);
