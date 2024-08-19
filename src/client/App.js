@@ -6,6 +6,10 @@ import {
 	Link,
 	// useNavigate,
 } from 'react-router-dom';
+import Chat from './components/chat/chat.component';
+import Tasks from './components/tasks/tasks.component';
+import Games from './components/games/games.component';
+import Profile from './components/profile/profile.component';
 import './App.css';
 
 // Context for managing modules and projects
@@ -105,6 +109,10 @@ const App = () => {
 				<div className="dashboard-container">
 					<SideMenu />
 					<Routes>
+						<Route path="/messages" element={<Chat />} />
+						<Route path="/tasks" element={<Tasks />} />
+						<Route path="/profile" element={<Profile />} />
+						<Route path="/games" element={<Games />} />
 						<Route path="/" element={<Home />} />
 						<Route path="/module/:moduleId" element={<Module />} />
 						<Route
