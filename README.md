@@ -123,7 +123,7 @@ There are the following folders and files in the client folder:
     -   [ ] the chats projects for core node should be defined in order to choose the best method to integrate both apps in the project, now the socket is a basic poc on the react app and the chat with ia is an embedded project deployed in parallel. The core node project pretends to integrate the parallel project in html inside the react project as a separate route/link(if this is possible all the documentation would be done with reveal.js as project solution).
 -   [ ] 1. add cross-env to modify env using package.json script, ex `"build:server": "echo cross-env SERVER_BUILD=true node webpack.build.js"`
 -   [ ] 1. add testing coverage
-- Documentation for code chages using video git and revealjs 
+-   Documentation for code chages using video git and revealjs
 
 ### apps
 
@@ -155,7 +155,8 @@ The main goal is to have a profesional dashboard to add modules projects and tas
 
 ## License
 
-
 ## env
 
 diamond-token => sn.lzJwo7aafUprUtQvKRj5UUfiwUFL2A8IeDrUHrWJcHCSMB4Nvz1t1aL07Ypn9Jnk3j3Uwjbwp67if4TCqNB2tOAVLAGVRS6M
+
+the file config/paths.js is the key to mix all the tools with webpack

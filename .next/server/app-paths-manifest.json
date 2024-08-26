@@ -1,0 +1,11 @@
+{
+  "/dashboard/page": "app/dashboard/page.js",
+  "/chat-app-ia/node_modules/color-convert/route": "app/chat-app-ia/node_modules/color-convert/route.js",
+  "/dashboard/home/page": "app/dashboard/home/page.js",
+  "/dashboard/games/page": "app/dashboard/games/page.js",
+  "/dashboard/messages/page": "app/dashboard/messages/page.js",
+  "/dashboard/projects/page": "app/dashboard/projects/page.js",
+  "/dashboard/tasks/page": "app/dashboard/tasks/page.js",
+  "/dashboard/modules/page": "app/dashboard/modules/page.js",
+  "/chat-app-ia/node_modules/express/lib/router/route": "app/chat-app-ia/node_modules/express/lib/router/route.js"
+}
