@@ -1,22 +1,16 @@
 import React, { useState, createContext, useContext } from 'react';
-import {
-	BrowserRouter as Router,
-	Routes,
-	Route,
-	Link,
-	// useNavigate,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Chat from './components/chat/chat.component';
 import Tasks from './components/tasks/tasks.component';
 import Games from './components/games/games.component';
 import Profile from './components/profile/profile.component';
 import './App.css';
-import Components from './components/catalog/catalog.component';
+import Dashboard from './components/catalog/dashboard.component';
 
 // Context for managing modules and projects
 const AppContext = createContext();
 
-const App = () => {
+const MainApp = () => {
 	// State for modules
 	const [modules, setModules] = useState([
 		{
@@ -114,7 +108,7 @@ const App = () => {
 						<Route path="/tasks" element={<Tasks />} />
 						<Route path="/profile" element={<Profile />} />
 						<Route path="/games" element={<Games />} />
-						<Route path="/components" element={<Components />} />
+						<Route path="/components" element={<Dashboard />} />
 						<Route path="/" element={<Home />} />
 						<Route path="/module/:moduleId" element={<Module />} />
 						<Route
@@ -282,4 +276,4 @@ const Project = () => {
 	);
 };
 
-export default App; //withRouter(Dashboard);
+export default MainApp; //withRouter(Dashboard);
