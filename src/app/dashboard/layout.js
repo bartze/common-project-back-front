@@ -7,11 +7,11 @@ export const metadata = {
 	description: 'A learning dashboard project in React Express',
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout() {
 	return (
 		<html lang="en">
 			<body>
-				<Providers>{children}</Providers>
+				<Providers></Providers>
 			</body>
 		</html>
 	);

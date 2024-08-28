@@ -12,12 +12,11 @@ import {
 	SkipToContent,
 	SideNav,
 	SideNavItems,
-	Link,
+	//Link,
 	HeaderSideNavItems,
 } from '@carbon/react';
 import { Switcher, Notification, UserAvatar } from '@carbon/icons-react';
-//import { Link } from 'react-router-dom';
-
+import { Link } from 'react-router-dom';
 // import Link from 'next/link'; // THIS WAS THE PROBLEM
 
 const TutorialHeader = () => (
@@ -30,25 +29,25 @@ const TutorialHeader = () => (
 					onClick={onClickSideNavExpand}
 					isActive={isSideNavExpanded}
 				/>
-				<Link href="/" passHref legacyBehavior>
+				<Link to="/">
 					<HeaderName prefix="AD 3.0">Dashboard</HeaderName>
 				</Link>
 				<HeaderNavigation aria-label="AD 3.0 - React Component Diamond Tutorial">
-					<Link href="/modules" passHref legacyBehavior>
-						<HeaderMenuItem>Modules</HeaderMenuItem>
-					</Link>
-					<Link href="/projects" passHref legacyBehavior>
-						<HeaderMenuItem>Projects</HeaderMenuItem>
-					</Link>
-					<Link href="/tasks" passHref legacyBehavior>
-						<HeaderMenuItem>Tasks</HeaderMenuItem>
-					</Link>
-					<Link href="/messages" passHref legacyBehavior>
-						<HeaderMenuItem>Messages</HeaderMenuItem>
-					</Link>
-					<Link href="/games" passHref legacyBehavior>
-						<HeaderMenuItem>Games</HeaderMenuItem>
-					</Link>
+					<HeaderMenuItem>
+						<Link to="/modules">Modules</Link>
+					</HeaderMenuItem>
+					<HeaderMenuItem>
+						<Link to="/projects">Projects</Link>
+					</HeaderMenuItem>
+					<HeaderMenuItem>
+						<Link to="/tasks">Tasks</Link>
+					</HeaderMenuItem>
+					<HeaderMenuItem>
+						<Link to="/messages">Messages</Link>
+					</HeaderMenuItem>
+					<HeaderMenuItem>
+						<Link to="/games">Games</Link>
+					</HeaderMenuItem>
 				</HeaderNavigation>
 				<SideNav
 					aria-label="Side navigation"
@@ -57,19 +56,19 @@ const TutorialHeader = () => (
 				>
 					<SideNavItems>
 						<HeaderSideNavItems>
-							<Link href="/modules" passHref legacyBehavior>
+							<Link to="/modules">
 								<HeaderMenuItem>Modules</HeaderMenuItem>
 							</Link>
-							<Link href="/projects" passHref legacyBehavior>
+							<Link to="/projects">
 								<HeaderMenuItem>Projects</HeaderMenuItem>
 							</Link>
-							<Link href="/tasks" passHref legacyBehavior>
+							<Link to="/tasks">
 								<HeaderMenuItem>Tasks</HeaderMenuItem>
 							</Link>
-							<Link href="/messages" passHref legacyBehavior>
+							<Link to="/messages">
 								<HeaderMenuItem>Messages</HeaderMenuItem>
 							</Link>
-							<Link href="/games" passHref legacyBehavior>
+							<Link to="/games">
 								<HeaderMenuItem>Games</HeaderMenuItem>
 							</Link>
 						</HeaderSideNavItems>
@@ -81,7 +80,7 @@ const TutorialHeader = () => (
 						tooltipAlignment="center"
 						className="action-icons"
 					>
-						<Link href="/notifications" passHref legacyBehavior>
+						<Link to="/notifications">
 							<Notification size={20} />
 						</Link>
 					</HeaderGlobalAction>
@@ -90,7 +89,7 @@ const TutorialHeader = () => (
 						tooltipAlignment="center"
 						className="action-icons"
 					>
-						<Link href="/profile" passHref legacyBehavior>
+						<Link to="/profile">
 							<UserAvatar size={20} />
 						</Link>
 					</HeaderGlobalAction>

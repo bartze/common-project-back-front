@@ -1,6 +1,6 @@
 'use client';
 
-import ModulesTable from './ModulesTable';
+import ProfileTable from './ProfileTable';
 import {
 	Link,
 	DataTableSkeleton,
@@ -66,7 +66,7 @@ const getRowItems = (rows) =>
 		links: <LinkList url={row.html_url} homepageUrl={row.homepage} />,
 	}));
 
-function ModulesPage() {
+function GamesPage() {
 	const [firstRowIndex, setFirstRowIndex] = useState(0);
 	const [currentPageSize, setCurrentPageSize] = useState(10);
 	const [loading, setLoading] = useState(true);
@@ -96,7 +96,7 @@ function ModulesPage() {
 	if (loading) {
 		return (
 			<Grid className="repo-page">
-				<Column lg={16} md={8} sm={4} className="modules-page__r1">
+				<Column lg={16} md={8} sm={4} className="games-page__r1">
 					<DataTableSkeleton
 						columnCount={headers.length + 1}
 						rowCount={10}
@@ -113,8 +113,8 @@ function ModulesPage() {
 
 	return (
 		<Grid className="repo-page">
-			<Column lg={16} md={8} sm={4} className="modules-page__r1">
-				<ModulesTable
+			<Column lg={16} md={8} sm={4} className="games-page__r1">
+				<ProfileTable
 					headers={headers}
 					rows={rows.slice(
 						firstRowIndex,
@@ -140,4 +140,4 @@ function ModulesPage() {
 	);
 }
 
-export default ModulesPage;
+export default GamesPage;
