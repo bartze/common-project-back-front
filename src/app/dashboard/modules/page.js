@@ -1,142 +1,210 @@
 'use client';
 
-import ModulesTable from './ModulesTable';
-import {
-	Link,
-	DataTableSkeleton,
-	Pagination,
-	Column,
-	Grid,
-} from '@carbon/react';
+import { Column, Grid, ClickableTile } from '@carbon/react';
+import { SimpleBarChart, DonutChart } from '@carbon/charts-react';
+import PageSeparator from '../../dashboard/temp_components/Dashboard/PageSeparator';
+import { VideoChat, Image, Police, Folders, Upload } from '@carbon/react/icons';
+import dummy_data from '../tasks/dummy_data';
 
-import React, { useEffect, useState } from 'react';
-import { Octokit } from '@octokit/core';
+const rowData = dummy_data.map((x) => {
+	return {
+		...x,
+		id: x.id.toString(),
+	};
+});
+const groupCount = (objectArray, property) => {
+	let transform = new Map();
+	transform = objectArray.reduce(function (acc, obj) {
+		let key = obj[property];
+		if (!acc[key]) {
+			acc[key] = [];
+		}
+		acc[key].push(obj);
+		return acc;
+	}, {});
 
-const octokitClient = new Octokit({});
+	let result = [];
+	for (let key in transform) {
+		let arraySize = transform[key].length;
+		result.push({
+			group: key,
+			value: arraySize,
+		});
+	}
 
-const headers = [
-	{
-		key: 'name',
-		header: 'Name',
-	},
-	{
-		key: 'createdAt',
-		header: 'Created',
-	},
-	{
-		key: 'updatedAt',
-		header: 'Updated',
-	},
-	{
-		key: 'issueCount',
-		header: 'Open Issues',
-	},
-	{
-		key: 'stars',
-		header: 'Stars',
-	},
-	{
-		key: 'links',
-		header: 'Links',
-	},
-];
+	return result;
+};
 
-const LinkList = ({ url, homepageUrl }) => (
-	<ul style={{ display: 'flex' }}>
-		<li>
-			<Link href={url}>GitHub</Link>
-		</li>
-		{homepageUrl && (
-			<li>
-				<span>&nbsp;|&nbsp;</span>
-				<Link href={homepageUrl}>Homepage</Link>
-			</li>
-		)}
-	</ul>
-);
+const chartStatus = {
+	data: groupCount(rowData, 'status'),
+	options1: {
+		title: 'Status',
+		axes: {
+			left: {
+				mapsTo: 'group',
+				scaleType: 'labels',
+			},
+			bottom: {
+				mapsTo: 'value',
+			},
+		},
+		height: '220px',
+	},
+	options2: {
+		title: '',
+		resizable: true,
+		donut: {
+			center: {
+				label: 'Browsers',
+			},
+		},
+		height: '220px',
+	},
+};
 
-const getRowItems = (rows) =>
-	rows.map((row) => ({
-		...row,
-		key: row.id,
-		stars: row.stargazers_count,
-		issueCount: row.open_issues_count,
-		createdAt: new Date(row.created_at).toLocaleDateString(),
-		updatedAt: new Date(row.updated_at).toLocaleDateString(),
-		links: <LinkList url={row.html_url} homepageUrl={row.homepage} />,
-	}));
+const chartOfficer = {
+	data: groupCount(rowData, 'case_officer'),
+	options1: {
+		title: 'Officer',
+		axes: {
+			left: {
+				mapsTo: 'group',
+				scaleType: 'labels',
+			},
+			bottom: {
+				mapsTo: 'value',
+			},
+		},
+		height: '220px',
+	},
+	options2: {
+		title: '',
+		resizable: true,
+		donut: {
+			center: {
+				label: 'Browsers',
+			},
+		},
+		height: '220px',
+	},
+};
 
 function ModulesPage() {
-	const [firstRowIndex, setFirstRowIndex] = useState(0);
-	const [currentPageSize, setCurrentPageSize] = useState(10);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState();
-	const [rows, setRows] = useState([]);
-
-	useEffect(() => {
-		async function getCarbonRepos() {
-			const res = await octokitClient.request('GET /orgs/{org}/repos', {
-				org: 'carbon-design-system',
-				per_page: 75,
-				sort: 'updated',
-				direction: 'desc',
-			});
-
-			if (res.status === 200) {
-				setRows(getRowItems(res.data));
-			} else {
-				setError('Error obtaining repository data');
-			}
-			setLoading(false);
-		}
-
-		getCarbonRepos();
-	}, []);
-
-	if (loading) {
-		return (
-			<Grid className="repo-page">
-				<Column lg={16} md={8} sm={4} className="modules-page__r1">
-					<DataTableSkeleton
-						columnCount={headers.length + 1}
-						rowCount={10}
-						headers={headers}
-					/>
+	return (
+		<>
+			<PageSeparator title="Available Sources For Analysis" />
+			<Grid>
+				<Column lg={16} md={8} sm={4}>
+					<Grid>
+						<Column md={4} lg={{ span: 3, offset: 0 }} sm={4}>
+							<ClickableTile>
+								<VideoChat
+									size={32}
+									aria-label="Videos Uploaded"
+								/>
+								<br />
+								Videos Uploaded
+							</ClickableTile>
+						</Column>
+						<Column md={4} lg={3} sm={4}>
+							<ClickableTile>
+								<Image size={32} />
+								<br />
+								Photos Uploaded
+							</ClickableTile>
+						</Column>
+						<Column md={4} lg={3} sm={4}>
+							<ClickableTile>
+								<Police size={32} />
+								<br />
+								Officer's Bodycam
+							</ClickableTile>
+						</Column>
+						<Column md={4} lg={3} sm={4}>
+							<ClickableTile>
+								<Folders size={32} />
+								<br />
+								Officer's Reports
+							</ClickableTile>
+						</Column>
+						<Column md={4} lg={4} sm={4}>
+							<ClickableTile>
+								<Upload size={32} />
+								<br />
+								Another Source
+							</ClickableTile>
+						</Column>
+					</Grid>
 				</Column>
 			</Grid>
-		);
-	}
-
-	if (error) {
-		return `Error! ${error}`;
-	}
-
-	return (
-		<Grid className="repo-page">
-			<Column lg={16} md={8} sm={4} className="modules-page__r1">
-				<ModulesTable
-					headers={headers}
-					rows={rows.slice(
-						firstRowIndex,
-						firstRowIndex + currentPageSize,
-					)}
-				/>
-				<Pagination
-					totalItems={rows.length}
-					backwardText="Previous page"
-					forwardText="Next page"
-					pageSize={currentPageSize}
-					pageSizes={[5, 10, 15, 25]}
-					itemsPerPageText="Items per page"
-					onChange={({ page, pageSize }) => {
-						if (pageSize !== currentPageSize) {
-							setCurrentPageSize(pageSize);
-						}
-						setFirstRowIndex(pageSize * (page - 1));
-					}}
-				/>
-			</Column>
-		</Grid>
+			<PageSeparator title="Statistics" />
+			<Grid>
+				<Column lg={16} md={8} sm={4}>
+					<Grid>
+						<Column
+							md={4}
+							lg={10}
+							sm={4}
+							style={{
+								float: 'left',
+								border: '1px solid #cccccc',
+							}}
+						>
+							<SimpleBarChart
+								data={chartStatus.data}
+								options={chartStatus.options1}
+							/>
+						</Column>
+						<Column
+							md={4}
+							lg={6}
+							sm={4}
+							style={{
+								float: 'right',
+								border: '1px solid #cccccc',
+							}}
+						>
+							<DonutChart
+								data={chartStatus.data}
+								options={chartStatus.options2}
+							/>
+						</Column>
+						<Column
+							md={4}
+							lg={10}
+							sm={4}
+							style={{
+								float: 'left',
+								border: '1px solid #cccccc',
+								marginTop: '1rem',
+								marginBottom: '1rem',
+							}}
+						>
+							<SimpleBarChart
+								data={chartOfficer.data}
+								options={chartOfficer.options1}
+							/>
+						</Column>
+						<Column
+							md={4}
+							lg={6}
+							sm={4}
+							style={{
+								float: 'right',
+								border: '1px solid #cccccc',
+								marginTop: '1rem',
+								marginBottom: '1rem',
+							}}
+						>
+							<DonutChart
+								data={chartOfficer.data}
+								options={chartOfficer.options2}
+							/>
+						</Column>
+					</Grid>
+				</Column>
+			</Grid>
+		</>
 	);
 }
 
