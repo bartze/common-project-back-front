@@ -10,7 +10,7 @@ import TasksPage from './tasks/page';
 import Chat from './messages/page';
 import GamesPage from './games/page';
 import ProjectsPage from './projects/page';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import RegisterPage from './register/page';
 import LoginPage from './login/page';
 import ProfilePage from './profile/page';
