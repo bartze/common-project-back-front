@@ -1,5 +1,7 @@
+'use client';
+
 import { Component } from 'react';
-import { withRouter } from '../../common/with-router';
+
 class Chat extends Component {
 	socketIOClientHandler() {
 		const socket = window.io('localhost:8083');
@@ -52,5 +54,5 @@ class Chat extends Component {
 	}
 }
 
-export default withRouter(Chat);
+export default Chat;
 // <script src="./socket.js"></script>

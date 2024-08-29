@@ -1,4 +1,4 @@
-import http from '../http-common';
+import http from './http-common';
 
 /**
  * ModuleService class that contains methods to interact with the server API using HTTP requests.

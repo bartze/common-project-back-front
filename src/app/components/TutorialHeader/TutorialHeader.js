@@ -45,9 +45,6 @@ const TutorialHeader = () => (
 					<HeaderMenuItem>
 						<Link to="/messages">Messages</Link>
 					</HeaderMenuItem>
-					<HeaderMenuItem>
-						<Link to="/games">Games</Link>
-					</HeaderMenuItem>
 				</HeaderNavigation>
 				<SideNav
 					aria-label="Side navigation"
@@ -67,9 +64,6 @@ const TutorialHeader = () => (
 							</Link>
 							<Link to="/messages">
 								<HeaderMenuItem>Messages</HeaderMenuItem>
-							</Link>
-							<Link to="/games">
-								<HeaderMenuItem>Games</HeaderMenuItem>
 							</Link>
 						</HeaderSideNavItems>
 					</SideNavItems>
@@ -97,7 +91,9 @@ const TutorialHeader = () => (
 						aria-label="App Switcher"
 						tooltipAlignment="end"
 					>
-						<Switcher size={20} />
+						<Link to="/profile">
+							<Switcher size={20} />
+						</Link>
 					</HeaderGlobalAction>
 				</HeaderGlobalBar>
 			</Header>
