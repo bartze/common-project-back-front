@@ -12,12 +12,13 @@ import {
 	SkipToContent,
 	SideNav,
 	SideNavItems,
-	//Link,
 	HeaderSideNavItems,
+	// Link, // renders but navigation ko
 } from '@carbon/react';
 import { Switcher, Notification, UserAvatar } from '@carbon/icons-react';
-import { Link } from 'react-router-dom';
-// import Link from 'next/link'; // THIS WAS THE PROBLEM
+import { Link } from 'react-router-dom'; // renders, works but need styles
+
+const isLoggedIn = false;
 
 const TutorialHeader = () => (
 	<HeaderContainer
@@ -95,6 +96,28 @@ const TutorialHeader = () => (
 							<Switcher size={20} />
 						</Link>
 					</HeaderGlobalAction>
+
+					{!isLoggedIn && (
+						<HeaderGlobalAction
+							aria-label="Login"
+							tooltipAlignment="end"
+						>
+							<Link to="/login">
+								<UserAvatar size={20} />
+							</Link>
+						</HeaderGlobalAction>
+					)}
+
+					{!isLoggedIn && (
+						<HeaderGlobalAction
+							aria-label="Register"
+							tooltipAlignment="end"
+						>
+							<Link to="/register">
+								<UserAvatar size={20} />
+							</Link>
+						</HeaderGlobalAction>
+					)}
 				</HeaderGlobalBar>
 			</Header>
 		)}

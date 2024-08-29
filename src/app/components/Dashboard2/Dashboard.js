@@ -23,12 +23,11 @@ import {
 	Upload,
 } from '@carbon/react/icons';
 
-import PageSeparator from '../../components/Dashboard/PageSeparator';
-import ReportsTable from '../../components/ReportsTable/ReportsTable';
-import ReportModal from '../../components/Report/ReportModal';
-
-import header_data from '../../components/Dashboard/header_data';
-import dummy_data from '../../components/Dashboard/dummy_data';
+import PageSeparator from './Dashboard/PageSeparator';
+import ReportsTable from './ReportsTable/ReportsTable';
+import ReportModal from './Report/ReportModal';
+import header_data from './Dashboard/header_data';
+import dummy_data from './Dashboard/dummy_data';
 
 import '@carbon/charts/styles.css';
 

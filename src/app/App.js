@@ -1,6 +1,6 @@
 import './globals.scss';
 
-import { Providers } from './providers';
+import { Providers } from './views/providers';
 
 export const metadata = {
 	title: 'AD 3.0 - Dashboard',

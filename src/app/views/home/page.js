@@ -18,7 +18,6 @@ import {
 	AcceleratingTransformation,
 } from '@carbon/pictograms-react';
 import { InfoSection, InfoCard } from '../../components/Info/Info';
-//import Image from 'next/image';
 
 export default function HomePage() {
 	return (
