@@ -1,16 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import TasksTable from './TaskTable';
-import { Pagination, Grid, Column } from '@carbon/react';
-
-import header_data from './header_data';
-import dummy_data from './dummy_data';
-
+import TasksTable from './TasksTable';
+import TasksActionBar from './TasksActionBar';
+import { Grid, Column } from '@carbon/react';
+import { task_headers } from '../../services/header_data';
+import { task_data } from '../../services/dummy_data';
 import '@carbon/charts/styles.css';
 
-const headerData = header_data;
-const rowData = dummy_data.map((x) => {
+const taskData = task_data.map((x) => {
 	return {
 		...x,
 		id: x.id.toString(),
@@ -18,7 +16,7 @@ const rowData = dummy_data.map((x) => {
 });
 
 function TasksPage() {
-	const [totalItems, setTotalItems] = useState(rowData.length);
+	const [totalItems, setTotalItems] = useState(taskData.length);
 	const [firstRowIndex, setFirstRowIndex] = useState(0);
 	const [currentPageSize, setCurrentPageSize] = useState(5);
 	const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -37,6 +35,7 @@ function TasksPage() {
 
 	const archiveIncidentReport = (i) => {
 		console.log(i);
+		alert('Archived Item ' + i);
 	};
 
 	const closeModal = () => {
@@ -44,49 +43,52 @@ function TasksPage() {
 	};
 
 	return (
-		<Grid>
-			<Column lg={16} md={8} sm={4}>
-				<Grid>
-					<Column
-						md={4}
-						lg={16}
-						sm={4}
-						style={{ marginTop: '1rem', marginBottom: '1rem' }}
-					>
-						<Pagination
-							totalItems={totalItems}
-							backwardText="Previous page"
-							forwardText="Next page"
-							pageSize={currentPageSize}
-							pageSizes={[5, 25, 50, 100]}
-							itemsPerPageText="Items per page"
-							onChange={({ page, pageSize }) => {
-								if (pageSize !== currentPageSize) {
-									setCurrentPageSize(pageSize);
-								}
-								setFirstRowIndex(pageSize * (page - 1));
-							}}
-						/>
-						<TasksTable
-							headers={headerData}
-							rows={rowData.slice(
-								firstRowIndex,
-								firstRowIndex + currentPageSize,
-							)}
-							editIncidentHandler={editIncidentReport}
-							archiveIncidentHandler={archiveIncidentReport}
-						/>
-						{modalIsOpen && (
-							<ReportModal
-								modalIsOpen={modalIsOpen}
-								modalCancelHandler={closeModal}
-								incident={selectedIncident}
+		<>
+			<TasksActionBar />
+			<Grid>
+				<Column lg={16} md={8} sm={4}>
+					<Grid>
+						<Column
+							md={4}
+							lg={16}
+							sm={4}
+							style={{ marginTop: '1rem', marginBottom: '1rem' }}
+						>
+							{/* 							<Pagination
+								totalItems={totalItems}
+								backwardText="Previous page"
+								forwardText="Next page"
+								pageSize={currentPageSize}
+								pageSizes={[5, 25, 50, 100]}
+								itemsPerPageText="Items per page"
+								onChange={({ page, pageSize }) => {
+									if (pageSize !== currentPageSize) {
+										setCurrentPageSize(pageSize);
+									}
+									setFirstRowIndex(pageSize * (page - 1));
+								}}
+							/> */}
+							<TasksTable
+								headers={task_headers}
+								rows={taskData.slice(
+									firstRowIndex,
+									firstRowIndex + currentPageSize,
+								)}
+								editIncidentHandler={editIncidentReport}
+								archiveIncidentHandler={archiveIncidentReport}
 							/>
-						)}
-					</Column>
-				</Grid>
-			</Column>
-		</Grid>
+							{modalIsOpen && (
+								<ReportModal
+									modalIsOpen={modalIsOpen}
+									modalCancelHandler={closeModal}
+									incident={selectedIncident}
+								/>
+							)}
+						</Column>
+					</Grid>
+				</Column>
+			</Grid>
+		</>
 	);
 }
 

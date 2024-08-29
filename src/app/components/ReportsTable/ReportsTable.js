@@ -21,7 +21,7 @@ import {
 
 import { Archive } from '@carbon/react/icons';
 
-const TasksTable = (props) => {
+const ReportsTable = (props) => {
   const batchArchiveIncidents = (selectedRows) => {
     console.log(selectedRows);
   }
@@ -108,4 +108,4 @@ const TasksTable = (props) => {
   );
 };
 
-export default TasksTable;
+export default ReportsTable;

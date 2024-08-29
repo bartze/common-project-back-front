@@ -21,20 +21,20 @@ import {
 
 import { Archive } from '@carbon/react/icons';
 
-const ModulesTable = (props) => {
+const TasksTable = (props) => {
 	const batchArchiveIncidents = (selectedRows) => {
 		// console.log(selectedRows);
-		alert('todo modules');
+		alert('todo tasks');
 	};
 
 	const editIncident = (i) => {
 		// props.editIncidentHandler(i);
-		alert('todo modules');
+		alert('todo tasks');
 	};
 
 	const archiveIncident = (i) => {
 		// props.archiveIncidentHandler(i);
-		alert('todo modules');
+		alert('todo tasks');
 	};
 
 	return (
@@ -137,4 +137,4 @@ const ModulesTable = (props) => {
 	);
 };
 
-export default ModulesTable;
+export default TasksTable;

@@ -2,70 +2,141 @@
 
 import React from 'react';
 import {
-  DataTable,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableExpandHeader,
-  TableHeader,
-  TableBody,
-  TableExpandRow,
-  TableCell,
-  TableExpandedRow,
+	DataTable,
+	OverflowMenu,
+	OverflowMenuItem,
+	TableContainer,
+	Table,
+	TableHead,
+	TableBatchActions,
+	TableBatchAction,
+	TableRow,
+	TableToolbar,
+	TableToolbarContent,
+	TableToolbarSearch,
+	TableSelectAll,
+	TableSelectRow,
+	TableHeader,
+	TableBody,
+	TableCell,
 } from '@carbon/react';
 
-const ProjectsTable = ({ rows, headers }) => {
-  const getRowDescription = (rowId) => {
-    const row = rows.find(({ id }) => id === rowId);
-    return row ? row.description : '';
-  };
+import { Archive } from '@carbon/react/icons';
 
-  return (
-    <DataTable
-      rows={rows}
-      headers={headers}
-      render={({
-        rows,
-        headers,
-        getHeaderProps,
-        getRowProps,
-        getTableProps,
-      }) => (
-        <TableContainer
-          title="Projects"
-          description="A collection of public projects from the current modules."
-        >
-          <Table {...getTableProps()}>
-            <TableHead>
-              <TableRow>
-                <TableExpandHeader />
-                {headers.map((header) => (
-                  <TableHeader {...getHeaderProps({ header })} key={header.key}>
-                    {header.header}
-                  </TableHeader>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map((row) => (
-                <React.Fragment key={row.id}>
-                  <TableExpandRow {...getRowProps({ row })}>
-                    {row.cells.map((cell) => (
-                      <TableCell key={cell.id}>{cell.value}</TableCell>
-                    ))}
-                  </TableExpandRow>
-                  <TableExpandedRow colSpan={headers.length + 1}>
-                    <p>{getRowDescription(row.id)}</p>
-                  </TableExpandedRow>
-                </React.Fragment>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      )}
-    />
-  );
+const ProjectsTable = (props) => {
+	const batchArchiveIncidents = (selectedRows) => {
+		// console.log(selectedRows);
+		alert('todo projects');
+	};
+
+	const editIncident = (i) => {
+		// props.editIncidentHandler(i);
+		alert('todo projects');
+	};
+
+	const archiveIncident = (i) => {
+		// props.archiveIncidentHandler(i);
+		alert('todo projects');
+	};
+
+	return (
+		<DataTable
+			rows={props.rows}
+			headers={props.headers}
+			isSortable
+			render={({
+				rows,
+				headers,
+				getHeaderProps,
+				getRowProps,
+				getSelectionProps,
+				getToolbarProps,
+				getBatchActionProps,
+				onInputChange,
+				selectedRows,
+				getTableProps,
+				getTableContainerProps,
+			}) => {
+				return (
+					<TableContainer
+						title={props.title}
+						description={props.description}
+						{...getTableContainerProps()}
+					>
+						<TableToolbar {...getToolbarProps()}>
+							<TableBatchActions {...getBatchActionProps()}>
+								<TableBatchAction
+									renderIcon={Archive}
+									iconDescription="Archive the selected rows"
+									onClick={() =>
+										batchArchiveIncidents(selectedRows)
+									}
+								>
+									Archive
+								</TableBatchAction>
+							</TableBatchActions>
+							<TableToolbarContent>
+								<TableToolbarSearch onChange={onInputChange} />
+							</TableToolbarContent>
+						</TableToolbar>
+						<Table {...getTableProps()}>
+							<TableHead>
+								<TableRow>
+									<TableSelectAll {...getSelectionProps()} />
+									{headers.map((header) => (
+										<TableHeader
+											{...getHeaderProps({ header })}
+										>
+											{header.header}
+										</TableHeader>
+									))}
+									<TableHeader style={{ width: '1rem' }} />
+								</TableRow>
+							</TableHead>
+							<TableBody>
+								{rows.map((row) => (
+									<TableRow
+										key={row.id}
+										{...getRowProps({ row })}
+									>
+										<TableSelectRow
+											{...getSelectionProps({ row })}
+										/>
+										{row.cells.map((cell) => (
+											<TableCell key={cell.id}>
+												{cell.value}
+											</TableCell>
+										))}
+										<TableCell className="cds--table-column-menu">
+											<OverflowMenu
+												flipped
+												size="md"
+												ariaLabel=""
+											>
+												<OverflowMenuItem
+													itemText="Edit"
+													onClick={() =>
+														editIncident(row)
+													}
+												/>
+												<OverflowMenuItem
+													isDelete
+													itemText="Archive"
+													onClick={() =>
+														archiveIncident(row)
+													}
+												/>
+											</OverflowMenu>
+										</TableCell>
+									</TableRow>
+								))}
+							</TableBody>
+						</Table>
+					</TableContainer>
+				);
+			}}
+		/>
+	);
 };
 
 export default ProjectsTable;
