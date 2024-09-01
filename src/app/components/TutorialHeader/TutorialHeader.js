@@ -15,10 +15,10 @@ import {
 	HeaderSideNavItems,
 	// Link, // renders but navigation ko
 } from '@carbon/react';
-import { Switcher, Notification, UserAvatar } from '@carbon/icons-react';
+import { Notification, UserAvatar } from '@carbon/icons-react';
 import { Link } from 'react-router-dom'; // renders, works but need styles
 
-const isLoggedIn = false;
+const isLoggedIn = true; // logging and register would be done with firebase library using gmail if possible
 
 const TutorialHeader = () => (
 	<HeaderContainer
@@ -86,14 +86,6 @@ const TutorialHeader = () => (
 					>
 						<Link to="/profile">
 							<UserAvatar size={20} />
-						</Link>
-					</HeaderGlobalAction>
-					<HeaderGlobalAction
-						aria-label="App Switcher"
-						tooltipAlignment="end"
-					>
-						<Link to="/profile">
-							<Switcher size={20} />
 						</Link>
 					</HeaderGlobalAction>
 

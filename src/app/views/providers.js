@@ -9,6 +9,7 @@ import ModulesPage from './modules/page';
 import TasksPage from './tasks/page';
 import Chat from './messages/page';
 import GamesPage from './games/page';
+import NotificationsPage from './notifications/page';
 import ProjectsPage from './projects/page';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import RegisterPage from './register/page';
@@ -31,7 +32,10 @@ export function Providers() {
 						<Route path="/messages" element={<Chat />} />
 						<Route path="/games" element={<GamesPage />} />
 						<Route path="/profile" element={<ProfilePage />} />
-						<Route path="/notifications" element={<GamesPage />} />
+						<Route
+							path="/notifications"
+							element={<NotificationsPage />}
+						/>
 						<Route path="/games" element={<GamesPage />} />
 						<Route path="/register" element={<RegisterPage />} />
 						<Route path="/login" element={<LoginPage />} />
